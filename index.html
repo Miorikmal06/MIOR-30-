@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - LostFinder</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <div class="corkboard">
+
+    <!-- Decorative red string lines -->
+    <svg class="string-layer" xmlns="http://www.w3.org/2000/svg">
+      <line x1="120" y1="200" x2="620" y2="350" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,6"/>
+      <line x1="300" y1="160" x2="800" y2="480" stroke="#c0392b" stroke-width="0.8" stroke-dasharray="3,8"/>
+      <line x1="60"  y1="420" x2="500" y2="250" stroke="#c0392b" stroke-width="0.7" stroke-dasharray="5,7"/>
+    </svg>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <a class="logo" href="index.html">
+        <span class="logo-dot"></span>
+        LostFinder
+      </a>
+      <div class="nav-links">
+        <a href="index.html"       class="active"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="browse-items.html"><i class="fas fa-search"></i> Browse</a>
+        <a href="my-reports.html" ><i class="fas fa-clipboard-list"></i> My Reports</a>
+        <a href="messages.html"   ><i class="fas fa-envelope"></i> Messages</a>
+        <a href="profile.html"    ><i class="fas fa-user-circle"></i> Profile</a>
+      </div>
+    </nav>
+
+    <div class="board">
+
+      <!-- WELCOME NOTE -->
+      <div class="welcome-note">
+        <div class="tape-strip"></div>
+        <h1>Welcome back, <span id="userNameDisplay">User</span>.</h1>
+        <p>Platform reunite barang hilang &amp; ditemui.<br>Ada yang hilang? Ada yang jumpa? Kita connect.</p>
+      </div>
+
+      <!-- MAIN GRID -->
+      <div class="board-grid">
+
+        <!-- STAT: Total Items -->
+        <div class="index-card">
+          <div class="pin" style="top:-7px; left:50%; transform:translateX(-50%);"></div>
+          <div class="card-lines"></div>
+          <div class="card-label">
+            <span>Total items</span>
+            <span class="label-line"></span>
+          </div>
+          <div class="card-number" id="totalItems">0</div>
+          <div class="card-sub">items on the board</div>
+        </div>
+
+        <!-- STAT: Reunited -->
+        <div class="index-card">
+          <div class="pin pin-teal" style="top:-7px; left:50%; transform:translateX(-50%);"></div>
+          <div class="card-lines"></div>
+          <div class="card-label">
+            <span>Reunited</span>
+            <span class="label-line"></span>
+          </div>
+          <div class="card-number green" id="reunitedCount">0</div>
+          <div class="card-sub">happy endings ✓</div>
+        </div>
+
+        <!-- EVIDENCE BOARD (Recent Activity) -->
+        <div class="evidence-board">
+          <div class="board-header">
+            <span class="live-dot"></span> <span>RECENT ACTIVITY</span>
+          </div>
+          <div id="recentActivitiesList">
+            <div class="evidence-item">
+              <div class="ev-dot lost"></div>
+              <div class="ev-text">
+                <div class="ev-name">Loading...</div>
+                <div class="ev-meta">Just now</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK ACTIONS -->
+        <div class="actions-card">
+          <div class="pin pin-amber" style="top:-7px; left:24px;"></div>
+          <div class="section-label">// quick actions</div>
+          <div class="action-btns">
+            <a href="report-lost.html"  class="action-btn btn-lost">
+              <i class="fas fa-frown"></i> Saya Hilang Barang
+            </a>
+            <a href="report-found.html" class="action-btn btn-found">
+              <i class="fas fa-smile"></i> Saya Jumpa Barang
+            </a>
+            <a href="browse-items.html" class="action-btn btn-browse">
+              <i class="fas fa-search"></i> Tengok Semua
+            </a>
+          </div>
+        </div>
+
+        <!-- CATEGORIES -->
+        <div class="cat-grid">
+          <a href="browse-items.html?cat=dompet" class="cat-pill">
+            <span class="cat-icon">&#128179;</span>
+            <span class="cat-name">Dompet</span>
+          </a>
+          <a href="browse-items.html?cat=telefon" class="cat-pill">
+            <span class="cat-icon">&#128241;</span>
+            <span class="cat-name">Telefon</span>
+          </a>
+          <a href="browse-items.html?cat=kunci" class="cat-pill">
+            <span class="cat-icon">&#128273;</span>
+            <span class="cat-name">Kunci</span>
+          </a>
+          <a href="browse-items.html?cat=beg" class="cat-pill">
+            <span class="cat-icon">&#127890;</span>
+            <span class="cat-name">Beg</span>
+          </a>
+          <a href="browse-items.html?cat=dokumen" class="cat-pill">
+            <span class="cat-icon">&#128196;</span>
+            <span class="cat-name">Dokumen</span>
+          </a>
+        </div>
+
+      </div><!-- /board-grid -->
+    </div><!-- /board -->
+  </div><!-- /corkboard -->
+
+  <script src="jquery1.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - LostFinder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <!-- Red string decoration -->
+    <svg class="string-layer" xmlns="http://www.w3.org/2000/svg">
+        <line x1="80" y1="150" x2="400" y2="350" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="5,7"/>
+        <line x1="650" y1="100" x2="300" y2="450" stroke="#c0392b" stroke-width="0.9" stroke-dasharray="4,8"/>
+        <line x1="200" y1="500" x2="700" y2="300" stroke="#c0392b" stroke-width="0.7" stroke-dasharray="3,9"/>
+    </svg>
+
+    <!-- Navbar dengan tambahan Gallery & Video -->
+    <nav class="navbar">
+        <a class="logo" href="index.html">
+            <span class="logo-dot"></span>
+            LostFinder
+        </a>
+        <div class="nav-links">
+            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+            <a href="video.html"><i class="fas fa-video"></i> Video</a>
+            <a href="login.html" class="active"><i class="fas fa-key"></i> Login</a>
+            <a href="signup.html"><i class="fas fa-user-plus"></i> Sign Up</a>
+            <a href="team.html"><i class="fas fa-user-plus"></i> Our Teams</a>
+            <a href="review.html"><i class="fas fa-user-plus"></i> Review</a>
+        </div>
+    </nav>
+
+    <!-- Main Login Box -->
+    <div class="auth-box">
+        <div class="pin-red"></div>
+        <div class="tape-corner"></div>
+        
+        <div class="auth-header">
+            <i class="fas fa-key"></i>
+            <h2>Welcome Back</h2>
+            <p>masuk semula ke papan buletin</p>
+        </div>
+
+        <form id="loginForm">
+            <input type="email" id="loginEmail" placeholder="Email address" autocomplete="email" required>
+            <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password" required>
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-sign-in-alt"></i> Log Masuk
+            </button>
+        </form>
+        
+        <div class="auth-footer">
+            <i class="fas fa-scroll"></i> Belum ada akaun? <a href="signup.html">Daftar di sini</a>
+        </div>
+    </div>
+
+    <div class="sticker">
+        <i class="fas fa-thumbtack"></i> reunite what matters
+    </div>
+
+    <div id="toastMsg" class="toast-msg"></div>
+
+    <script src="/js/jquery2.js"></script>
+</body>
+</html>

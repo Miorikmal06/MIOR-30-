@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Reports - LostFinder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ink: #1a1410;
+            --paper: #f5f0e8;
+            --paper2: #ede8dd;
+            --red: #c0392b;
+            --amber: #d4820a;
+            --teal: #1a6b5c;
+            --border: #b8ad9e;
+            --muted: #7a7060;
+            --tape: rgba(255,235,150,0.55);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Syne', sans-serif;
+            color: var(--ink);
+            background-color: #c8a96e;
+            background-image: radial-gradient(circle at 15% 15%, #d4b580 0%, transparent 45%),
+                              radial-gradient(circle at 85% 85%, #b8964e 0%, transparent 45%),
+                              url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23c8a96e'/%3E%3Ccircle cx='1' cy='1' r='0.6' fill='%23b0893a' opacity='0.35'/%3E%3Ccircle cx='3' cy='3' r='0.5' fill='%23d4b070' opacity='0.25'/%3E%3Ccircle cx='3' cy='1' r='0.3' fill='%23a07830' opacity='0.2'/%3E%3C/svg%3E");
+        }
+
+        /* navbar identical with dashboard */
+        .navbar {
+            background: var(--ink);
+            padding: 0 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 58px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+        }
+
+        .logo {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.45rem;
+            color: var(--paper);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.01em;
+            text-decoration: none;
+        }
+
+        .logo-dot {
+            width: 9px; height: 9px;
+            background: var(--red);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 6px rgba(192,57,43,0.8);
+            animation: pulse 2.2s ease-in-out infinite;
+        }
+
+        @keyframes pulse { 0%,100% { transform: scale(1); opacity:1; } 50% { transform: scale(1.5); opacity:0.6; } }
+
+        .nav-links { display: flex; }
+        .nav-links a {
+            color: #888070;
+            text-decoration: none;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0 1.1rem;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .nav-links a:hover { color: #d0c8b8; }
+        .nav-links a.active { color: var(--paper); border-bottom-color: var(--red); }
+
+        /* main container */
+        .reports-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2.2rem 2rem 4rem;
+        }
+
+        /* header note */
+        .page-note {
+            background: #fffef5;
+            border: 1px solid #ddd5bb;
+            padding: 1.3rem 2rem;
+            position: relative;
+            transform: rotate(-0.4deg);
+            box-shadow: 4px 5px 0 rgba(0,0,0,0.12);
+            margin-bottom: 2rem;
+        }
+        .tape-strip {
+            position: absolute;
+            top: -13px;
+            left: 32px;
+            width: 72px;
+            height: 26px;
+            background: var(--tape);
+            border: 1px solid rgba(200,180,90,0.45);
+        }
+        .page-note h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.7rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .page-note h2 i { color: var(--teal); }
+        .page-note p {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-top: 8px;
+            border-top: 1px dashed #ccc5b0;
+            padding-top: 8px;
+        }
+
+        /* filter tabs for reports (status) */
+        .report-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 1.8rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: rgba(255,254,245,0.75);
+            border: 1px solid #d8cdb8;
+            padding: 8px 22px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: 0.2s;
+            border-radius: 40px;
+            color: var(--ink);
+        }
+        .tab-btn.active {
+            background: var(--ink);
+            color: var(--paper);
+            border-color: var(--ink);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .tab-btn:hover:not(.active) { background: #e7dfce; }
+
+        /* reports grid */
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.8rem;
+        }
+
+        /* report card */
+        .report-card {
+            background: #fffef5;
+            border: 1px solid #d8cdb8;
+            position: relative;
+            box-shadow: 4px 5px 0 rgba(0,0,0,0.12);
+            transition: transform 0.18s, box-shadow 0.18s;
+            transform: rotate(var(--rot, 0deg));
+            animation: cardRise 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+        }
+        @keyframes cardRise {
+            from { opacity: 0; transform: rotate(var(--rot,0deg)) translateY(20px); }
+            to { opacity: 1; transform: rotate(var(--rot,0deg)) translateY(0px); }
+        }
+        .report-card:hover {
+            transform: rotate(0deg) translateY(-5px) !important;
+            box-shadow: 6px 8px 0 rgba(0,0,0,0.18);
+        }
+
+        .card-header {
+            padding: 1rem 1.2rem 0.5rem;
+            border-bottom: 1px dashed #ece1cf;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .status-badge {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.55rem;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+        .status-lost { background: rgba(192,57,43,0.15); color: #b33a2c; border: 1px solid rgba(192,57,43,0.3); }
+        .status-found { background: rgba(26,107,92,0.12); color: #1c7c6a; border: 1px solid rgba(26,107,92,0.3); }
+        .status-reunited { background: rgba(212,130,10,0.12); color: #b5700c; border: 1px solid rgba(212,130,10,0.3); }
+
+        .report-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.25rem;
+            margin: 0.5rem 1.2rem 0.2rem;
+        }
+        .report-category {
+            display: inline-block;
+            background: #e7dfce;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            margin-left: 1.2rem;
+            margin-bottom: 8px;
+        }
+        .report-details {
+            padding: 0 1.2rem 1rem;
+        }
+        .detail-row {
+            display: flex;
+            gap: 8px;
+            font-size: 0.7rem;
+            font-family: 'DM Mono', monospace;
+            color: var(--muted);
+            margin-bottom: 8px;
+            align-items: baseline;
+        }
+        .detail-row i { width: 18px; font-size: 0.7rem; color: #a0937c; }
+        .desc-preview {
+            background: #fbf7ef;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            margin: 12px 0;
+            color: #5f5542;
+            line-height: 1.4;
+        }
+        .card-actions {
+            padding: 0.8rem 1.2rem 1.2rem;
+            display: flex;
+            gap: 12px;
+            border-top: 1px solid #ece1cf;
+            background: #faf5e9;
+        }
+        .edit-btn, .delete-btn {
+            background: transparent;
+            border: 1px solid #d1c2aa;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .edit-btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+        .delete-btn:hover { background: var(--red); color: white; border-color: var(--red); }
+
+        .empty-state {
+            text-align: center;
+            background: rgba(255,254,245,0.8);
+            padding: 3rem;
+            border: 1px dashed #b0a084;
+            border-radius: 28px;
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.2rem;
+            color: #7a6b52;
+            grid-column: 1 / -1;
+        }
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: #1a1410;
+            backdrop-filter: blur(12px);
+            border: 1px solid #c8b690;
+            padding: 12px 26px;
+            border-radius: 60px;
+            color: #f5eedc;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            z-index: 200;
+            transition: 0.25s ease;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        .toast-msg.show { transform: translateX(-50%) translateY(0); }
+
+        /* red string decoration */
+        .string-layer {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.1;
+        }
+        .reports-container, .navbar { position: relative; z-index: 2; }
+    </style>
+</head>
+<body>
+<div class="string-layer">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <line x1="90" y1="200" x2="550" y2="380" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,6"/>
+        <line x1="300" y1="120" x2="750" y2="520" stroke="#c0392b" stroke-width="0.8" stroke-dasharray="3,8"/>
+    </svg>
+</div>
+
+<nav class="navbar">
+    <a class="logo" href="index.html">
+        <span class="logo-dot"></span>
+        LostFinder
+    </a>
+    <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="browse-items.html"><i class="fas fa-search"></i> Browse</a>
+        <a href="my-reports.html" class="active"><i class="fas fa-clipboard-list"></i> My Reports</a>
+        <a href="messages.html"><i class="fas fa-envelope"></i> Messages</a>
+        <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+    </div>
+</nav>
+
+<div class="reports-container">
+    <div class="page-note">
+        <div class="tape-strip"></div>
+        <h2><i class="fas fa-flag-checkered"></i> Laporan Saya</h2>
+        <p>Hanya laporan yang awak buat akan muncul di sini. Urus semua barang hilang atau ditemui dalam satu tempat.</p>
+    </div>
+
+    <div class="report-tabs">
+        <button class="tab-btn active" data-filter="all">Semua</button>
+        <button class="tab-btn" data-filter="lost">Hilang</button>
+        <button class="tab-btn" data-filter="found">Ditemui</button>
+        <button class="tab-btn" data-filter="reunited">Sudah Reunite</button>
+    </div>
+
+    <div id="myReportsGrid" class="reports-grid"></div>
+</div>
+
+<div id="toastMsg" class="toast-msg">✓ Laporan dikemaskini</div>
+
+<script>
+    // ---------- AUTH + STORAGE ----------
+    const currentUser = sessionStorage.getItem("loggedInUser");
+    if (!currentUser) {
+        window.location.href = "login.html";
+    }
+
+    // key storage sama dengan browse & report pages
+    const STORAGE_KEY = "lostfound_items";
+
+    // Helper: load semua items dari localStorage
+    function getAllItems() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            return JSON.parse(stored);
+        }
+        // jangan cipta dummy untuk user lain, return empty array supaya tiada data rekaan muncul
+        return [];
+    }
+
+    // save items ke localStorage & trigger event untuk sync
+    function persistAllItems(items) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+        window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY, newValue: JSON.stringify(items) }));
+    }
+
+    // dapatkan laporan milik user yang login sahaja
+    function getMyReports() {
+        const all = getAllItems();
+        return all.filter(item => item.reporter === currentUser);
+    }
+
+    // render my reports based on active filter
+    let currentFilter = "all"; // all, lost, found, reunited
+
+    function renderMyReports() {
+        const container = document.getElementById("myReportsGrid");
+        if (!container) return;
+
+        let myItems = getMyReports();
+        
+        // apply filter status
+        if (currentFilter !== "all") {
+            myItems = myItems.filter(item => item.status === currentFilter);
+        }
+
+        if (myItems.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-scroll" style="font-size: 2rem; margin-bottom: 12px; display: block; opacity: 0.7;"></i>
+                    Tiada laporan ditemui untuk pilihan ini.<br>
+                    <a href="report-lost.html" style="color: var(--red); text-decoration: underline;">Laporkan barang hilang</a> atau 
+                    <a href="report-found.html" style="color: var(--teal); text-decoration: underline;">jumpa barang</a>.
+                </div>
+            `;
+            return;
+        }
+
+        // generate cards dengan rotasi rawak
+        const categoryMap = { dompet:'Dompet', telefon:'Telefon', kunci:'Kunci', beg:'Beg', dokumen:'Dokumen', elektronik:'Elektronik', lain:'Lain', Accessories:'Aksesori', Clothing:'Pakaian', Electronics:'Elektronik', Documents:'Dokumen', Keys:'Kunci', Bag:'Beg/Bag', Others:'Lain' };
+        
+        container.innerHTML = myItems.map(item => {
+            const rot = (Math.random() * 1.4 - 0.7).toFixed(1);
+            const statusClass = item.status === 'lost' ? 'status-lost' : (item.status === 'found' ? 'status-found' : 'status-reunited');
+            const statusText = item.status === 'lost' ? 'HILANG' : (item.status === 'found' ? 'DITEMUI' : 'SUDAH REUNITE');
+            const catDisplay = categoryMap[item.category] || item.category || 'Lain-lain';
+            const dateDisplay = item.date || 'Tarikh tidak diisi';
+            const locationDisplay = item.location || 'Lokasi tidak dinyatakan';
+            const descShort = item.description ? (item.description.length > 85 ? item.description.slice(0,85)+'…' : item.description) : 'Tiada penerangan ringkas';
+            
+            return `
+                <div class="report-card" data-item-id="${escapeHtml(item.id)}" style="--rot: ${rot}deg;">
+                    <div class="card-header">
+                        <span class="status-badge ${statusClass}"><i class="fas ${item.status === 'lost' ? 'fa-frown' : (item.status === 'found' ? 'fa-smile' : 'fa-handshake')}"></i> ${statusText}</span>
+                        <small style="font-size:0.55rem; font-family:monospace;">ID: ${escapeHtml(String(item.id).slice(-8))}</small>
+                    </div>
+                    <h3 class="report-title">${escapeHtml(item.title)}</h3>
+                    <div class="report-category"><i class="fas fa-tag"></i> ${escapeHtml(catDisplay)}</div>
+                    <div class="report-details">
+                        <div class="detail-row"><i class="fas fa-map-marker-alt"></i> <span>${escapeHtml(locationDisplay)}</span></div>
+                        <div class="detail-row"><i class="fas fa-calendar-alt"></i> <span>${escapeHtml(dateDisplay)}</span></div>
+                        <div class="detail-row"><i class="fas fa-user"></i> <span>Dilapor oleh: ${escapeHtml(item.reporter)}</span></div>
+                        <div class="desc-preview"><i class="fas fa-align-left" style="margin-right:5px;"></i> ${escapeHtml(descShort)}</div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="edit-btn" data-id="${escapeHtml(item.id)}"><i class="fas fa-pen"></i> Edit Status</button>
+                        <button class="delete-btn" data-id="${escapeHtml(item.id)}"><i class="fas fa-trash-alt"></i> Hapus</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        // attach event listeners for edit & delete
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = btn.getAttribute('data-id');
+                editReportStatus(id);
+            });
+        });
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = btn.getAttribute('data-id');
+                deleteReport(id);
+            });
+        });
+    }
+
+    // edit status: lost -> found -> reunited (cycle ringkas)
+    function editReportStatus(itemId) {
+        const allItems = getAllItems();
+        const itemIndex = allItems.findIndex(i => i.id === itemId);
+        if (itemIndex === -1) {
+            showToast("Laporan tidak dijumpai.", true);
+            return;
+        }
+        const item = allItems[itemIndex];
+        // hanya benarkan edit jika reporter adalah user semasa
+        if (item.reporter !== currentUser) {
+            showToast("Anda tidak mempunyai akses untuk mengubah laporan ini.", true);
+            return;
+        }
+        
+        let newStatus = item.status;
+        if (item.status === 'lost') newStatus = 'found';
+        else if (item.status === 'found') newStatus = 'reunited';
+        else if (item.status === 'reunited') newStatus = 'lost';
+        else newStatus = 'lost';
+        
+        const oldStatus = item.status;
+        item.status = newStatus;
+        persistAllItems(allItems);
+        showToast(`Status ditukar: ${oldStatus.toUpperCase()} → ${newStatus.toUpperCase()}`);
+        renderMyReports();  // refresh senarai
+        // sync dengan halaman lain (browse-items)
+        if (typeof window.dispatchEvent === 'function') {
+            window.dispatchEvent(new Event('storage'));
+        }
+    }
+
+    function deleteReport(itemId) {
+        const confirmDel = confirm("Hapuskan laporan ini? Tindakan ini tidak boleh dipulihkan.");
+        if (!confirmDel) return;
+        
+        let allItems = getAllItems();
+        const itemExists = allItems.find(i => i.id === itemId && i.reporter === currentUser);
+        if (!itemExists) {
+            showToast("Laporan tidak sah atau bukan milik anda.", true);
+            return;
+        }
+        const newItems = allItems.filter(i => i.id !== itemId);
+        persistAllItems(newItems);
+        showToast("Laporan berjaya dihapuskan.");
+        renderMyReports();
+    }
+
+    function showToast(msg, isError = false) {
+        const toast = document.getElementById('toastMsg');
+        toast.textContent = msg;
+        toast.style.background = isError ? '#5a1e15' : '#1a1410';
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2600);
+    }
+
+    function escapeHtml(str) { if(!str) return ''; return String(str).replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+
+    // tab switching
+    function initTabs() {
+        const tabs = document.querySelectorAll('.tab-btn');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentFilter = tab.getAttribute('data-filter');
+                renderMyReports();
+            });
+        });
+    }
+
+    // sync jika ada perubahan dari tab lain (storage event)
+    window.addEventListener('storage', (e) => {
+        if (e.key === STORAGE_KEY) {
+            renderMyReports();
+        }
+    });
+
+    // init page
+    initTabs();
+    renderMyReports();
+
+    // optional: expose helper untuk report pages (pastikan laporan baru akan tampil di sini)
+    window.refreshMyReports = renderMyReports;
+    // override global addNewReportItem untuk sync (jika report-lost/found panggil)
+    const originalAdd = window.addNewReportItem;
+    window.addNewReportItem = (newItem) => {
+        if (originalAdd) originalAdd(newItem);
+        renderMyReports();
+    };
+</script>
+</body>
+</html>

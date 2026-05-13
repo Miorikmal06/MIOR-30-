@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video - Dokumentasi Reunite - LostFinder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ink: #1a1410;
+            --paper: #f5f0e8;
+            --red: #c0392b;
+            --amber: #d4820a;
+            --teal: #1a6b5c;
+            --border: #b8ad9e;
+            --muted: #7a7060;
+            --tape: rgba(255,235,150,0.55);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Syne', sans-serif;
+            background-color: #c8a96e;
+            background-image: radial-gradient(circle at 15% 15%, #d4b580 0%, transparent 45%),
+                              radial-gradient(circle at 85% 85%, #b8964e 0%, transparent 45%),
+                              url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23c8a96e'/%3E%3Ccircle cx='1' cy='1' r='0.6' fill='%23b0893a' opacity='0.35'/%3E%3Ccircle cx='3' cy='3' r='0.5' fill='%23d4b070' opacity='0.25'/%3E%3Ccircle cx='3' cy='1' r='0.3' fill='%23a07830' opacity='0.2'/%3E%3C/svg%3E");
+        }
+
+        .navbar {
+            background: var(--ink);
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 58px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.45rem;
+            color: var(--paper);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-dot {
+            width: 9px; height: 9px;
+            background: var(--red);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2.2s ease-in-out infinite;
+        }
+
+        @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.6; } }
+
+        .nav-links { display: flex; flex-wrap: wrap; align-items: center; }
+        .nav-links a {
+            color: #888070;
+            text-decoration: none;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0 0.8rem;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .nav-links a:hover { color: #d0c8b8; }
+        .nav-links a.active { color: var(--paper); border-bottom-color: var(--amber); }
+
+        .video-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+        }
+
+        .hero-note {
+            background: #fffef5;
+            border: 1px solid #ddd5bb;
+            padding: 1.5rem 2rem;
+            position: relative;
+            transform: rotate(-0.4deg);
+            box-shadow: 4px 5px 0 rgba(0,0,0,0.12);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .tape-strip {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 26px;
+            background: var(--tape);
+            border: 1px solid rgba(200,180,90,0.45);
+        }
+        .hero-note h1 { font-family: 'Instrument Serif', serif; font-size: 1.8rem; font-weight: 400; }
+        .hero-note h1 i { color: var(--amber); margin-right: 10px; }
+        .hero-note p { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); margin-top: 8px; border-top: 1px dashed #ccc5b0; padding-top: 8px; }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .video-card {
+            background: #fffef5;
+            border: 1px solid #d8cdb8;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 3px 4px 0 rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+        }
+        .video-card:hover { transform: translateY(-5px); box-shadow: 5px 6px 0 rgba(0,0,0,0.12); }
+        
+        video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #2e261e;
+        }
+        .video-info {
+            padding: 0.8rem;
+            background: #faf5e9;
+            border-top: 1px solid #e4dac8;
+        }
+        .video-title { font-weight: 600; font-size: 0.8rem; margin-bottom: 4px; }
+        .video-date { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); }
+        .string-layer { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; opacity:0.1; }
+        .video-container, .navbar { position: relative; z-index: 2; }
+        
+        @media (max-width: 700px) {
+            .video-container { padding: 1rem; }
+            .nav-links a { padding: 0 0.5rem; font-size: 0.55rem; }
+            .navbar { padding: 0 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="string-layer"><svg width="100%" height="100%"><line x1="100" y1="200" x2="500" y2="400" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,6"/></svg></div>
+
+<nav class="navbar">
+    <a class="logo" href="index.html"><span class="logo-dot"></span>LostFinder</a>
+    <div class="nav-links">
+        <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+            <a href="video.html"><i class="fas fa-video"></i> Video</a>
+            <a href="login.html" class="active"><i class="fas fa-key"></i> Login</a>
+            <a href="signup.html"><i class="fas fa-user-plus"></i> Sign Up</a>
+            <a href="team.html"><i class="fas fa-user-plus"></i> Our Teams</a>
+    </div>
+</nav>
+
+<div class="video-container">
+    <div class="hero-note">
+        <div class="tape-strip"></div>
+        <h1><i class="fas fa-video"></i> Video Dokumentasi Reunite</h1>
+        <p>Saksikan detik-detik mengharukan barang berjaya dikembalikan kepada pemilik.</p>
+    </div>
+
+    <div class="video-grid">
+        <!-- Slot 1 -->
+        <div class="video-card">
+            <video controls>
+                <source src="videos/kunci.mp4" type="video/mp4">
+                Browser tidak support video tag.
+            </video>
+            <div class="video-info">
+                <div class="video-title"><i class="fas fa-key"></i> Kunci Kereta Berjaya Ditemui</div>
+                <div class="video-date"><i class="fas fa-calendar-alt"></i> 15 Januari 2025</div>
+            </div>
+        </div>
+
+        <!-- Slot 2 -->
+        <div class="video-card">
+            <video controls>
+                <source src="videos/mouse.mp4" type="video/mp4">
+                Browser tidak support video tag.
+            </video>
+            <div class="video-info">
+                <div class="video-title"><i class="fas fa-mouse"></i> Mouse Wireless Ditemukan</div>
+                <div class="video-date"><i class="fas fa-calendar-alt"></i> 10 Januari 2025</div>
+            </div>
+        </div>
+
+        <!-- Slot 3 -->
+        <div class="video-card">
+            <video controls>
+                <source src="videos/kotak.mp4" type="video/mp4">
+                Browser tidak support video tag.
+            </video>
+            <div class="video-info">
+                <div class="video-title"><i class="fas fa-box"></i> Kotak Barang Berharga</div>
+                <div class="video-date"><i class="fas fa-calendar-alt"></i> 5 Januari 2025</div>
+            </div>
+        </div>
+
+        <!-- Slot 4 -->
+        <div class="video-card">
+            <video controls>
+                <source src="videos/kasut.mp4" type="video/mp4">
+                Browser tidak support video tag.
+            </video>
+            <div class="video-info">
+                <div class="video-title"><i class="fas fa-shoe-prints"></i> Kasut Sport Dikembalikan</div>
+                <div class="video-date"><i class="fas fa-calendar-alt"></i> 28 Disember 2024</div>
+            </div>
+        </div>
+
+        <!-- Slot 5 -->
+        <div class="video-card">
+            <video controls>
+                <source src="videos/jam.mp4" type="video/mp4">
+                Browser tidak support video tag.
+            </video>
+            <div class="video-info">
+                <div class="video-title"><i class="fas fa-clock"></i> Jam Tangan Casio</div>
+                <div class="video-date"><i class="fas fa-calendar-alt"></i> 20 Disember 2024</div>
+            </div>
+        </div>
+
+        <!-- Slot 6 -->
+        <div class="video-card">
+            <video controls>
+                <source src="videos/helmet.mp4" type="video/mp4">
+                Browser tidak support video tag.
+            </video>
+            <div class="video-info">
+                <div class="video-title"><i class="fas fa-motorcycle"></i> Helmet Kembali</div>
+                <div class="video-date"><i class="fas fa-calendar-alt"></i> 15 Disember 2024</div>
+            </div>
+        </div>
+
+        <!-- Slot 7 -->
+        <div class="video-card">
+            <video controls>
+                <source src="videos/dompet.mp4" type="video/mp4">
+                Browser tidak support video tag.
+            </video>
+            <div class="video-info">
+                <div class="video-title"><i class="fas fa-wallet"></i> Dompet Leather</div>
+                <div class="video-date"><i class="fas fa-calendar-alt"></i> 10 Disember 2024</div>
+            </div>
+        </div>
+
+        <!-- Slot 8 -->
+        <div class="video-card">
+            <video controls>
+                <source src="videos/cap.mp4" type="video/mp4">
+                Browser tidak support video tag.
+            </video>
+            <div class="video-info">
+                <div class="video-title"><i class="fas fa-hat-cowboy"></i> Topi Koleksi</div>
+                <div class="video-date"><i class="fas fa-calendar-alt"></i> 5 Disember 2024</div>
+            </div>
+        </div>
+
+        <!-- Slot 9 -->
+        <div class="video-card">
+            <video controls>
+                <source src="videos/cam.mp4" type="video/mp4">
+                Browser tidak support video tag.
+            </video>
+            <div class="video-info">
+                <div class="video-title"><i class="fas fa-camera"></i> Kamera DSLR</div>
+                <div class="video-date"><i class="fas fa-calendar-alt"></i> 28 November 2024</div>
+            </div>
+        </div>
+
+        <!-- Slot 10 -->
+        <div class="video-card">
+            <video controls>
+                <source src="videos/bag.mp4" type="video/mp4">
+                Browser tidak support video tag.
+            </video>
+            <div class="video-info">
+                <div class="video-title"><i class="fas fa-bag-shopping"></i> Beg Tote Uniqlo</div>
+                <div class="video-date"><i class="fas fa-calendar-alt"></i> 20 November 2024</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Check login untuk navbar (optional)
+    const currentUser = sessionStorage.getItem("loggedInUser");
+    if (!currentUser) {
+        // Tak redirect, just biar user tengok video
+        console.log("Guest user - boleh tengok video");
+    }
+</script>
+</body>
+</html>

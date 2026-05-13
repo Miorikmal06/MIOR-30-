@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - LostFinder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --ink: #1a1410;
+            --paper: #f5f0e8;
+            --paper2: #ede8dd;
+            --red: #c0392b;
+            --amber: #d4820a;
+            --teal: #1a6b5c;
+            --border: #b8ad9e;
+            --muted: #7a7060;
+            --tape: rgba(255,235,150,0.55);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Syne', sans-serif;
+            color: var(--ink);
+            background-color: #c8a96e;
+            background-image: radial-gradient(circle at 15% 15%, #d4b580 0%, transparent 45%),
+                              radial-gradient(circle at 85% 85%, #b8964e 0%, transparent 45%),
+                              url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23c8a96e'/%3E%3Ccircle cx='1' cy='1' r='0.6' fill='%23b0893a' opacity='0.35'/%3E%3Ccircle cx='3' cy='3' r='0.5' fill='%23d4b070' opacity='0.25'/%3E%3Ccircle cx='3' cy='1' r='0.3' fill='%23a07830' opacity='0.2'/%3E%3C/svg%3E");
+        }
+
+        /* Decorative red string layer */
+        .string-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.12;
+        }
+
+        /* Navbar matching the lostfinder theme */
+        .navbar {
+            background: var(--ink);
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 58px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.45rem;
+            color: var(--paper);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.01em;
+            text-decoration: none;
+        }
+
+        .logo-dot {
+            width: 9px;
+            height: 9px;
+            background: var(--red);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 6px rgba(192,57,43,0.8);
+            animation: pulse 2.2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.6; }
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #888070;
+            text-decoration: none;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0 0.9rem;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .nav-links a:hover { color: #d0c8b8; }
+        .nav-links a.active { color: var(--paper); border-bottom-color: var(--red); }
+
+        /* Main container */
+        .team-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Hero / Header note */
+        .hero-note {
+            background: #fffef5;
+            border: 1px solid #ddd5bb;
+            padding: 1.5rem 2rem;
+            position: relative;
+            transform: rotate(-0.4deg);
+            box-shadow: 4px 5px 0 rgba(0,0,0,0.12);
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+        .tape-strip {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 26px;
+            background: var(--tape);
+            border: 1px solid rgba(200,180,90,0.45);
+        }
+        .hero-note h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2rem;
+            font-weight: 400;
+        }
+        .hero-note h1 i { color: var(--teal); margin-right: 10px; }
+        .hero-note p {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-top: 8px;
+            border-top: 1px dashed #ccc5b0;
+            padding-top: 8px;
+        }
+
+        /* Team grid: two cards side by side */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Member card - pinned paper style */
+        .member-card {
+            background: #fffef5;
+            border: 1px solid #d8cdb8;
+            position: relative;
+            padding: 2rem 1.5rem 1.8rem;
+            box-shadow: 8px 9px 0 rgba(0,0,0,0.12);
+            transform: rotate(0.5deg);
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            text-align: center;
+            backdrop-filter: blur(2px);
+        }
+        .member-card:hover {
+            transform: rotate(0deg) translateY(-5px);
+            box-shadow: 10px 12px 0 rgba(0,0,0,0.15);
+        }
+
+        /* Individual pin for each card */
+        .card-pin-red {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle, #e05a4a, #9e2d1f);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            z-index: 2;
+        }
+        .card-pin-red::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 30px;
+            background: linear-gradient(180deg, #6b5a4a, #2a241e);
+            top: 22px;
+            left: 10px;
+            border-radius: 0 0 2px 2px;
+        }
+
+        /* Tape decoration corner */
+        .corner-tape {
+            position: absolute;
+            top: -8px;
+            left: 15px;
+            width: 50px;
+            height: 22px;
+            background: var(--tape);
+            border: 1px solid rgba(200,180,90,0.4);
+            transform: rotate(-4deg);
+            pointer-events: none;
+        }
+
+        /* Profile picture wrapper */
+        .profile-pic {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--teal);
+            overflow: hidden;
+            background: #e7dfce;
+            box-shadow: 3px 4px 0 rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .member-card:hover .profile-pic {
+            transform: scale(1.02);
+        }
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .member-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin: 0.5rem 0 0.25rem;
+            color: var(--ink);
+            line-height: 1.3;
+        }
+        .member-name span {
+            font-size: 0.8rem;
+            font-weight: normal;
+            color: var(--muted);
+        }
+        .member-role {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: #f3efdf;
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
+        .member-bio {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            color: #5a4f3e;
+            margin: 0.8rem 0;
+            padding: 0 0.5rem;
+        }
+        .member-contact {
+            margin-top: 1rem;
+            border-top: 1px dashed #e2d8c4;
+            padding-top: 0.8rem;
+            font-size: 0.7rem;
+            font-family: 'DM Mono', monospace;
+            color: var(--muted);
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .member-contact i {
+            margin-right: 4px;
+            color: var(--red);
+        }
+
+        /* Story note section */
+        .story-note {
+            background: #fffef5;
+            border: 1px solid #d8cdb8;
+            padding: 1.5rem 2rem;
+            position: relative;
+            transform: rotate(0.3deg);
+            box-shadow: 4px 5px 0 rgba(0,0,0,0.1);
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .story-note i {
+            font-size: 1.5rem;
+            color: var(--amber);
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+        .story-note h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .story-note p {
+            font-size: 0.8rem;
+            color: #5a4f3e;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* CTA button */
+        .cta-group {
+            text-align: center;
+            margin: 2rem 0 1rem;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--ink);
+            color: var(--paper);
+            text-decoration: none;
+            padding: 0.75rem 1.8rem;
+            border-radius: 60px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            transition: 0.2s;
+            box-shadow: 0 3px 0 #2f241f;
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 0 #2f241f;
+            background: #2a201b;
+        }
+
+        /* Toast notification */
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: #1a1410;
+            backdrop-filter: blur(12px);
+            border: 1px solid #c8b690;
+            padding: 10px 24px;
+            border-radius: 60px;
+            color: #f5eedc;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            z-index: 200;
+            transition: 0.25s;
+            pointer-events: none;
+        }
+        .toast-msg.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 750px) {
+            .navbar { padding: 0 1rem; }
+            .nav-links a { padding: 0 0.6rem; font-size: 0.55rem; }
+            .team-container { padding: 1.5rem; }
+            .profile-pic { width: 110px; height: 110px; }
+            .member-name { font-size: 1.2rem; }
+        }
+        @media (max-width: 650px) {
+            .navbar { flex-direction: column; height: auto; padding: 0.6rem; gap: 6px; position: relative; }
+            .nav-links a { height: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Red string decorative layer -->
+<svg class="string-layer" xmlns="http://www.w3.org/2000/svg">
+    <line x1="80" y1="200" x2="550" y2="380" stroke="#c0392b" stroke-width="1" stroke-dasharray="5,7"/>
+    <line x1="320" y1="120" x2="780" y2="500" stroke="#c0392b" stroke-width="0.9" stroke-dasharray="4,8"/>
+    <line x1="100" y1="550" x2="650" y2="280" stroke="#c0392b" stroke-width="0.7" stroke-dasharray="6,9"/>
+    <line x1="520" y1="70" x2="980" y2="350" stroke="#c0392b" stroke-width="0.8" stroke-dasharray="3,7"/>
+</svg>
+
+<!-- Navigation bar -->
+<nav class="navbar">
+    <a class="logo" href="index.html">
+        <span class="logo-dot"></span>
+        LostFinder
+    </a>
+    <div class="nav-links">
+        <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+        <a href="gallery.html"><i class="fas fa-images"></i> Gallery</a>
+        <a href="video.html"><i class="fas fa-video"></i> Video</a>
+        <a href="login.html"><i class="fas fa-key"></i> Login</a>
+        <a href="signup.html"><i class="fas fa-user-plus"></i> Sign Up</a>
+        <a href="team.html" class="active"><i class="fas fa-users"></i> Our Team</a>
+    </div>
+</nav>
+
+<div class="team-container">
+    <!-- Hero / Title -->
+    <div class="hero-note">
+        <div class="tape-strip"></div>
+        <h1><i class="fas fa-users"></i> Di Sebalik LostFinder</h1>
+        <p>Dua individu yang komited untuk menghubungkan semula barang hilang dengan pemilik — demi komuniti yang lebih prihatin.</p>
+    </div>
+
+    <!-- Two team members -->
+    <div class="team-grid">
+        
+        <!-- TEAM MEMBER 1 – Mior Muhammad Ikmal -->
+        <div class="member-card">
+            <div class="card-pin-red"></div>
+            <div class="corner-tape"></div>
+            <div class="profile-pic">
+                <!-- ⚠️ PASTIKAN FILE images/sol.png wujud! -->
+                <img id="ikmalPhoto" src="images/mio.png" alt="Mior Muhammad Ikmal" 
+                     onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?background=1a6b5c&color=fff&bold=true&name=MI&length=2&size=140'">
+            </div>
+            <div class="member-name">Mior Muhammad Ikmal<br><span>bin Mior Darul Ridzuan</span></div>
+            <div class="member-role"><i class="fas fa-crown"></i> Pengasas & Pembangun Utama</div>
+            <div class="member-bio">
+                🔍 "Saya percaya setiap barang yang hilang ada cerita. LostFinder diilhamkan daripada pengalaman kehilangan barang berharga dan kesukaran mencari saluran yang tepat. Saya bina platform ini untuk memudahkan komuniti melaporkan dan mencari barang hilang secara berpusat."
+            </div>
+            <div class="member-bio" style="font-size:0.75rem; background:#faf5e9; border-radius:16px; padding:8px;">
+                <i class="fas fa-heart" style="color:var(--red);"></i> Bertanggungjawab dalam reka bentuk, pembangunan sistem pesanan, pangkalan data, dan strategi keseluruhan platform.
+            </div>
+            <div class="member-contact">
+                <span><i class="fas fa-envelope"></i> ikmal@lostfinder.my</span>
+                <span><i class="fab fa-github"></i> ikmaldev</span>
+            </div>
+        </div>
+
+        <!-- TEAM MEMBER 2 – Muhammad Syamsul Nazir -->
+        <div class="member-card">
+            <div class="card-pin-red" style="background: radial-gradient(circle, #e0a14a, #b86f1a);"></div>
+            <div class="corner-tape"></div>
+            <div class="profile-pic">
+                <!-- ⚠️ PASTIKAN FILE images/mio.png wujud! -->
+                <img id="syamsulPhoto" src="images/sol.png" alt="Muhammad Syamsul Nazir"
+                     onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?background=d4820a&color=fff&bold=true&name=SN&length=2&size=140'">
+            </div>
+            <div class="member-name">Muhammad Syamsul Nazir<br><span>bin Samsuri</span></div>
+            <div class="member-role"><i class="fas fa-hand-sparkles"></i> Strategi Komuniti & Reka Bentuk</div>
+            <div class="member-bio">
+                🌟 "Setiap reunite memberi impak besar kepada seseorang. Saya fokus kepada pengalaman pengguna dan memastikan platform ini mesra, mudah difahami, dan boleh diakses oleh semua lapisan masyarakat. Melihat orang tersenyum apabila barang kesayangan kembali adalah kepuasan terbesar."
+            </div>
+            <div class="member-bio" style="font-size:0.75rem; background:#faf5e9; border-radius:16px; padding:8px;">
+                <i class="fas fa-lightbulb"></i> Mengetuai outreach media sosial, kurasi galeri reunite, reka bentuk antara muka, dan sokongan pengguna.
+            </div>
+            <div class="member-contact">
+                <span><i class="fas fa-envelope"></i> syamsul@lostfinder.my</span>
+                <span><i class="fab fa-instagram"></i> @syamsul.lostfinder</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional story / why we exist - sticky note vibe -->
+    <div class="story-note">
+        <i class="fas fa-paperclip"></i>
+        <h3>Kenapa LostFinder wujud?</h3>
+        <p>Kami mula dengan projek kecil ketika pengajian. Kami sedar ramai yang kehilangan barang berharga di tempat awam tetapi tidak tahu saluran yang tepat. LostFinder menjadi jambatan — percuma, mudah dan berfokus komuniti. Dengan lebih 200 reunite dan ribuan pengguna, misi kami terus berkembang. Terima kasih kerana menjadi sebahagian daripada perubahan ini! ✨</p>
+    </div>
+
+    <div class="cta-group">
+        <a href="about.html" class="cta-btn"><i class="fas fa-info-circle"></i> Ketahui Misi Kami</a>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-msg"></div>
+
+<script>
+    // Fungsi untuk debug - check jika gambar wujud
+    console.log("📸 Memeriksa gambar profil...");
+    
+    const ikmalImg = document.getElementById('ikmalPhoto');
+    const syamsulImg = document.getElementById('syamsulPhoto');
+    
+    if (ikmalImg) {
+        console.log("Ikmal image src:", ikmalImg.src);
+        ikmalImg.addEventListener('error', function() {
+            console.log("❌ Gambar Ikmal gagal dimuatkan. Pastikan folder 'images' wujud dan fail 'sol.png' ada.");
+            showToast("Gambar Ikmal tidak ditemui. Gunakan avatar lalai.", true);
+        });
+        ikmalImg.addEventListener('load', function() {
+            console.log("✅ Gambar Ikmal berjaya dimuatkan!");
+        });
+    }
+    
+    if (syamsulImg) {
+        console.log("Syamsul image src:", syamsulImg.src);
+        syamsulImg.addEventListener('error', function() {
+            console.log("❌ Gambar Syamsul gagal dimuatkan. Pastikan folder 'images' wujud dan fail 'mio.png' ada.");
+            showToast("Gambar Syamsul tidak ditemui. Gunakan avatar lalai.", true);
+        });
+        syamsulImg.addEventListener('load', function() {
+            console.log("✅ Gambar Syamsul berjaya dimuatkan!");
+        });
+    }
+    
+    function showToast(message, isError = false) {
+        const toast = document.getElementById('toastMsg');
+        toast.textContent = message;
+        toast.style.background = isError ? '#5a1e15' : '#1a1410';
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+    
+    console.log("✨ Team LostFinder - Mior Muhammad Ikmal & Muhammad Syamsul Nazir ✨");
+</script>
+</body>
+</html>

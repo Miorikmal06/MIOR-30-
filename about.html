@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - LostFinder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/about.css">
+</head>
+<body>
+<div class="string-layer">
+    <svg width="100%" height="100%">
+        <line x1="100" y1="180" x2="500" y2="380" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,6"/>
+        <line x1="650" y1="120" x2="300" y2="500" stroke="#c0392b" stroke-width="0.8" stroke-dasharray="3,8"/>
+        <line x1="200" y1="550" x2="750" y2="300" stroke="#c0392b" stroke-width="0.7" stroke-dasharray="5,7"/>
+    </svg>
+</div>
+
+<nav class="navbar">
+    <a class="logo" href="index.html">
+        <span class="logo-dot"></span>
+        LostFinder
+    </a>
+    <div class="nav-links">
+        <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+            <a href="video.html"><i class="fas fa-video"></i> Video</a>
+            <a href="login.html" class="active"><i class="fas fa-key"></i> Login</a>
+            <a href="signup.html"><i class="fas fa-user-plus"></i> Sign Up</a>
+            <a href="team.html"><i class="fas fa-user-plus"></i> Our Teams</a>
+    </div>
+</nav>
+
+<div class="about-container">
+    <div class="hero-note">
+        <div class="tape-strip"></div>
+        <h1><i class="fas fa-heart"></i> About LostFinder</h1>
+        <p>Bridging the gap between loss and reunion — satu platform untuk semua.</p>
+    </div>
+
+    <!-- Features Grid - GAMBAR UNTUK KAD FEATURE -->
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="pin-mini"></div>
+            <div class="card-illustration">
+                <img src="images/1.png" alt="Reunite" onerror="this.parentElement.innerHTML='<i class=\'fas fa-hand-holding-heart placeholder-icon\'></i>'">
+            </div>
+            <h3>Kembalikan Barang Hilang</h3>
+            <p>Platform komuniti yang menghubungkan mereka yang kehilangan barang dengan mereka yang menemui. Setiap laporan direkod dan boleh diakses oleh semua pengguna.</p>
+        </div>
+        <div class="info-card">
+            <div class="pin-mini pin-teal-mini"></div>
+            <div class="card-illustration">
+                <img src="images/2.png" alt="Chat" onerror="this.parentElement.innerHTML='<i class=\'fas fa-comments placeholder-icon\'></i>'">
+            </div>
+            <h3>Sistem Pesanan Terus</h3>
+            <p>Hubungi terus pelapor barang melalui sistem pesanan dalaman. Tiada perlu berkongsi nombor telefon awam — privasi anda terjamin.</p>
+        </div>
+        <div class="info-card">
+            <div class="pin-mini pin-amber-mini"></div>
+            <div class="card-illustration">
+                <img src="images/3.png" alt="Stats" onerror="this.parentElement.innerHTML='<i class=\'fas fa-chart-line placeholder-icon\'></i>'">
+            </div>
+            <h3>Statistik Realtime</h3>
+            <p>Pantau jumlah barang hilang, ditemui dan reunite melalui dashboard interaktif. Lihat impak komuniti kita bersama.</p>
+        </div>
+        <div class="info-card">
+            <div class="pin-mini"></div>
+            <div class="card-illustration">
+                <img src="images/4.png" alt="Mobile" onerror="this.parentElement.innerHTML='<i class=\'fas fa-mobile-alt placeholder-icon\'></i>'">
+            </div>
+            <h3>Responsif & Mudah Guna</h3>
+            <p>Dioptimumkan untuk desktop dan mudah alih. Laporkan barang dalam masa kurang 2 minit — ringkas dan efisien.</p>
+        </div>
+        <div class="info-card">
+            <div class="pin-mini pin-teal-mini"></div>
+            <div class="card-illustration">
+                <img src="images/5.png" alt="Secure" onerror="this.parentElement.innerHTML='<i class=\'fas fa-shield-alt placeholder-icon\'></i>'">
+            </div>
+            <h3>Selamat & Dipercayai</h3>
+            <p>Data peribadi dilindungi. Setiap laporan mempunyai ID unik untuk rujukan dan pemantauan.</p>
+        </div>
+        <div class="info-card">
+            <div class="pin-mini pin-amber-mini"></div>
+            <div class="card-illustration">
+                <img src="images/6.png" alt="Categories" onerror="this.parentElement.innerHTML='<i class=\'fas fa-tags placeholder-icon\'></i>'">
+            </div>
+            <h3>Pelbagai Kategori</h3>
+            <p>Dompet, telefon, kunci, beg, dokumen dan banyak lagi. Setiap kategori disusun untuk pencarian yang lebih tepat.</p>
+        </div>
+    </div>
+
+    <!-- GALERI GAMBAR -->
+    <div class="gallery-section">
+        <div class="pin-mini pin-teal-mini" style="top:-8px; left:30px;"></div>
+        <h3><i class="fas fa-images"></i> Galeri Barang Yang Berjaya Ditemui</h3>
+        <div class="gallery-grid" id="galleryGrid"></div>
+        <div class="gallery-note">
+            <i class="fas fa-info-circle"></i> Klik pada mana-mana gambar untuk lihat butiran barang yang berjaya dikembalikan
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-section">
+        <div class="pin-mini" style="top:-8px; left:30px;"></div>
+        <h3><i class="fas fa-chart-simple"></i> Dampak Komuniti</h3>
+        <div class="stats-grid" id="statsContainer">
+            <div class="stat-item">
+                <div class="stat-number" id="statTotalLost">0</div>
+                <div class="stat-label">Barang Dilaporkan Hilang</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="statTotalFound">0</div>
+                <div class="stat-label">Barang Ditemui</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="statReunited">0</div>
+                <div class="stat-label">Berjaya Reunite</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="statUsers">0</div>
+                <div class="stat-label">Pengguna Aktif</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+        <div class="pin-mini pin-teal-mini" style="top:-8px; left:30px;"></div>
+        <h3><i class="fas fa-question-circle"></i> Soalan Lazim (FAQ)</h3>
+        
+        <div class="faq-item">
+            <div class="faq-question" data-faq="1">
+                <i class="fas fa-chevron-right"></i> Apa itu LostFinder dan bagaimana ia berfungsi?
+            </div>
+            <div class="faq-answer" id="faqAns1">
+                LostFinder adalah platform dalam talian yang membantu individu melaporkan barang hilang atau ditemui. Pengguna boleh mendaftar percuma, melaporkan barang dengan butiran seperti kategori, lokasi, tarikh dan gambar.
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" data-faq="2">
+                <i class="fas fa-chevron-right"></i> Adakah perkhidmatan ini benar-benar percuma?
+            </div>
+            <div class="faq-answer" id="faqAns2">
+                Ya! LostFinder 100% percuma untuk semua pengguna. Tiada yuran pendaftaran, tiada yuran keahlian.
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" data-faq="3">
+                <i class="fas fa-chevron-right"></i> Bagaimana cara melaporkan barang yang hilang?
+            </div>
+            <div class="faq-answer" id="faqAns3">
+                Klik butang "Saya Hilang Barang" di halaman Dashboard, isi maklumat lengkap, dan hantar.
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" data-faq="4">
+                <i class="fas fa-chevron-right"></i> Apa yang perlu saya buat jika terjumpa barang orang lain?
+            </div>
+            <div class="faq-answer" id="faqAns4">
+                Tekan butang "Saya Jumpa Barang", lengkapkan borang, dan hantar.
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <a href="signup.html" class="cta-btn">
+            <i class="fas fa-user-plus"></i> Daftar Sekarang
+        </a>
+    </div>
+</div>
+
+<script src="/js/about.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - LostFinder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+<div class="string-layer">
+    <svg width="100%" height="100%">
+        <line x1="80" y1="180" x2="550" y2="350" stroke="#c0392b" stroke-width="0.8" stroke-dasharray="4,6"/>
+        <line x1="280" y1="120" x2="680" y2="480" stroke="#c0392b" stroke-width="0.7" stroke-dasharray="3,7"/>
+    </svg>
+</div>
+
+<nav class="navbar">
+    <a class="logo" href="index.html">
+        <span class="logo-dot"></span>
+        LostFinder
+    </a>
+    <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="browse-items.html"><i class="fas fa-search"></i> Browse</a>
+        <a href="my-reports.html"><i class="fas fa-clipboard-list"></i> My Reports</a>
+        <a href="messages.html"><i class="fas fa-envelope"></i> Messages</a>
+        <a href="profile.html" class="active"><i class="fas fa-user-circle"></i> Profile</a>
+    </div>
+</nav>
+
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="pin-red"></div>
+        <div class="tape-corner"></div>
+
+        <!-- Profile Picture Section -->
+        <div class="profile-pic-section">
+            <div class="profile-img-wrapper" id="profilePicWrapper">
+                <img id="profileImg" class="profile-img" src="" alt="Profile Picture" style="display: none;">
+                <div id="profilePlaceholder" class="profile-placeholder"><i class="fas fa-user-circle"></i></div>
+            </div>
+            <div class="camera-overlay" id="cameraOverlay">
+                <i class="fas fa-camera"></i>
+            </div>
+            <input type="file" id="profileImageInput" accept="image/jpeg,image/png,image/webp" style="display: none;">
+            <div class="profile-pic-hint"><i class="fas fa-info-circle"></i> Klik pada gambar untuk tukar</div>
+        </div>
+
+        <!-- User Info Fields -->
+        <div class="edit-toggle">
+            <button id="toggleEditBtn" class="edit-btn"><i class="fas fa-pen"></i> Edit Profile</button>
+        </div>
+
+        <div class="profile-field">
+            <label><i class="fas fa-user"></i> Nama Pengguna</label>
+            <input type="text" id="usernameInput" value="" disabled>
+        </div>
+
+        <div class="profile-field">
+            <label><i class="fas fa-envelope"></i> Emel</label>
+            <input type="email" id="emailInput" value="" disabled>
+        </div>
+
+        <div class="profile-field">
+            <label><i class="fas fa-phone-alt"></i> Nombor Telefon</label>
+            <input type="tel" id="phoneInput" value="" placeholder="+60 xxx xxx xxx" disabled>
+        </div>
+
+        <div class="profile-field">
+            <label><i class="fas fa-map-pin"></i> Lokasi (Bandar / Negeri)</label>
+            <input type="text" id="locationInput" value="" placeholder="cth. Kuala Lumpur, Selangor" disabled>
+        </div>
+
+        <div class="profile-field">
+            <label><i class="fas fa-info-circle"></i> Bio / About</label>
+            <textarea id="bioInput" rows="3" placeholder="Ceritakan sedikit tentang diri anda..." disabled></textarea>
+        </div>
+
+        <hr>
+
+        <div class="action-buttons">
+            <button id="saveProfileBtn" class="save-btn" style="display: none;"><i class="fas fa-save"></i> Simpan Perubahan</button>
+            <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Log Keluar</button>
+        </div>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-msg"></div>
+
+<script src="/js/profile.js"></script>
+</body>
+</html>

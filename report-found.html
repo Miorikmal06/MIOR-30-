@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Found Item - LostFinder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/report-found.css">
+</head>
+<body>
+
+<!-- Decorative red string layer -->
+<svg class="string-layer" xmlns="http://www.w3.org/2000/svg">
+    <line x1="80" y1="150" x2="450" y2="350" stroke="#c0392b" stroke-width="1" stroke-dasharray="5,7"/>
+    <line x1="650" y1="100" x2="300" y2="480" stroke="#c0392b" stroke-width="0.9" stroke-dasharray="4,8"/>
+    <line x1="100" y1="550" x2="700" y2="300" stroke="#c0392b" stroke-width="0.7" stroke-dasharray="6,9"/>
+</svg>
+
+<!-- Navigation bar -->
+<nav class="navbar">
+    <a class="logo" href="index.html">
+        <span class="logo-dot"></span>
+        LostFinder
+    </a>
+    <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="browse-items.html"><i class="fas fa-search"></i> Browse</a>
+        <a href="my-reports.html"><i class="fas fa-clipboard-list"></i> My Reports</a>
+        <a href="messages.html"><i class="fas fa-envelope"></i> Messages</a>
+        <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+    </div>
+</nav>
+
+<div class="report-container">
+    <!-- Hero / Header -->
+    <div class="hero-note">
+        <div class="tape-strip"></div>
+        <h1><i class="fas fa-smile-wink"></i> Saya Jumpa Barang!</h1>
+        <p>Terima kasih kerana prihatin. Isi borang di bawah untuk melaporkan barang yang anda temui.</p>
+    </div>
+
+    <!-- Report Form Card -->
+    <div class="report-card">
+        <div class="pin-teal"></div>
+        <div class="corner-tape"></div>
+        
+        <form id="reportFoundForm">
+            <!-- Item Title -->
+            <div class="form-group">
+                <label><i class="fas fa-tag"></i> Nama / Jenis Barang <span class="required">*</span></label>
+                <input type="text" id="itemTitle" placeholder="Contoh: Dompet kulit hitam, iPhone 14, Kunci kereta..." required>
+            </div>
+
+            <!-- Category -->
+            <div class="form-group">
+                <label><i class="fas fa-folder"></i> Kategori <span class="required">*</span></label>
+                <select id="itemCategory" required>
+                    <option value="">Pilih kategori</option>
+                    <option value="dompet">Dompet / Wallet</option>
+                    <option value="telefon">Telefon / Phone</option>
+                    <option value="kunci">Kunci / Keys</option>
+                    <option value="beg">Beg / Bag</option>
+                    <option value="dokumen">Dokumen / Document</option>
+                    <option value="lain">Lain-lain</option>
+                </select>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label><i class="fas fa-align-left"></i> Penerangan Terperinci <span class="required">*</span></label>
+                <textarea id="itemDescription" rows="4" placeholder="Warna, jenama, ciri-ciri khas, apa-apa yang boleh membantu pemilik mengenal pasti barang ini..." required></textarea>
+            </div>
+
+            <!-- Location Found -->
+            <div class="form-group">
+                <label><i class="fas fa-map-marker-alt"></i> Lokasi Ditemui <span class="required">*</span></label>
+                <input type="text" id="itemLocation" placeholder="Contoh: Mid Valley Mall, LRT KLCC, food court Avenue K..." required>
+            </div>
+
+            <!-- Date Found -->
+            <div class="form-group">
+                <label><i class="fas fa-calendar-alt"></i> Tarikh Ditemui <span class="required">*</span></label>
+                <input type="date" id="itemDate" required>
+            </div>
+
+            <!-- Image Upload -->
+            <div class="form-group">
+                <label><i class="fas fa-camera"></i> Gambar Barang (Optional)</label>
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Klik atau seret gambar ke sini</p>
+                    <p style="font-size:0.65rem;">JPG, PNG, WEBP (Max 2MB)</p>
+                    <input type="file" id="itemImage" accept="image/jpeg,image/png,image/webp">
+                </div>
+                <div id="imagePreview" class="image-preview" style="display: none;">
+                    <img id="previewImg" src="" alt="Preview">
+                    <button type="button" id="removeImageBtn" class="remove-img-btn"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+
+            <!-- Contact Info (auto from logged in user) -->
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Emel / Contact</label>
+                <input type="email" id="userContact" placeholder="Emel untuk dihubungi" readonly>
+                <small class="form-hint"><i class="fas fa-info-circle"></i> Emel akan diambil dari profil anda</small>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-actions">
+                <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Hantar Laporan</button>
+                <button type="button" class="reset-btn" id="resetBtn"><i class="fas fa-undo-alt"></i> Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Info Box -->
+    <div class="info-box">
+        <i class="fas fa-lightbulb"></i>
+        <div>
+            <strong>Tips:</strong> Sediakan gambar yang jelas dan penerangan yang terperinci. Ini akan membantu pemilik asal mengenal pasti barang mereka dengan mudah.
+        </div>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-msg"></div>
+
+<script src="/js/report-found.js"></script>
+</body>
+</html>

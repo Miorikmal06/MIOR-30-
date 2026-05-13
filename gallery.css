@@ -1,0 +1,373 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --ink: #1a1410;
+    --paper: #f5f0e8;
+    --paper2: #ede8dd;
+    --red: #c0392b;
+    --amber: #d4820a;
+    --teal: #1a6b5c;
+    --border: #b8ad9e;
+    --muted: #7a7060;
+    --tape: rgba(255, 235, 150, 0.55);
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Syne', sans-serif;
+    color: var(--ink);
+    background-color: #c8a96e;
+    background-image: radial-gradient(circle at 15% 15%, #d4b580 0%, transparent 45%),
+                      radial-gradient(circle at 85% 85%, #b8964e 0%, transparent 45%),
+                      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23c8a96e'/%3E%3Ccircle cx='1' cy='1' r='0.6' fill='%23b0893a' opacity='0.35'/%3E%3Ccircle cx='3' cy='3' r='0.5' fill='%23d4b070' opacity='0.25'/%3E%3Ccircle cx='3' cy='1' r='0.3' fill='%23a07830' opacity='0.2'/%3E%3C/svg%3E");
+}
+
+/* Navbar - Public Version */
+.navbar {
+    background: var(--ink);
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 58px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.45rem;
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logo-dot {
+    width: 9px;
+    height: 9px;
+    background: var(--red);
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.6;
+    }
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.nav-links a {
+    color: #888070;
+    text-decoration: none;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0 0.8rem;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-links a:hover {
+    color: #d0c8b8;
+}
+
+.nav-links a.active {
+    color: var(--paper);
+    border-bottom-color: var(--teal);
+}
+
+/* Container */
+.gallery-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+}
+
+/* Hero Note */
+.hero-note {
+    background: #fffef5;
+    border: 1px solid #ddd5bb;
+    padding: 1.5rem 2rem;
+    position: relative;
+    transform: rotate(-0.4deg);
+    box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.12);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.tape-strip {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 26px;
+    background: var(--tape);
+    border: 1px solid rgba(200, 180, 90, 0.45);
+}
+
+.hero-note h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+}
+
+.hero-note h1 i {
+    color: var(--teal);
+    margin-right: 10px;
+}
+
+.hero-note p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 8px;
+    border-top: 1px dashed #ccc5b0;
+    padding-top: 8px;
+}
+
+/* Info Login Banner */
+.login-banner {
+    background: #fef5e6;
+    border: 1px solid #e8dcc8;
+    padding: 0.8rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 60px;
+    text-align: center;
+    font-size: 0.75rem;
+    font-family: 'DM Mono', monospace;
+}
+
+.login-banner a {
+    color: var(--teal);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.login-banner a:hover {
+    text-decoration: underline;
+    color: var(--red);
+}
+
+/* Upload Section - Hanya untuk user yang login */
+.upload-section {
+    background: #fffef5;
+    border: 1px solid #d8cdb8;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    transform: rotate(0.2deg);
+    box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.upload-section h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.upload-area {
+    border: 2px dashed #cfc3ac;
+    background: #fefaf0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 1rem;
+}
+
+.upload-area:hover {
+    border-color: var(--teal);
+    background: #f5efe2;
+}
+
+.upload-area i {
+    font-size: 2rem;
+    color: var(--teal);
+    margin-bottom: 8px;
+}
+
+.upload-area p {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.upload-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #f0ebe0;
+}
+
+.upload-disabled:hover {
+    border-color: #cfc3ac;
+    background: #f0ebe0;
+}
+
+.gallery-upload-input {
+    display: none;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+}
+
+.gallery-card {
+    background: #fffef5;
+    border: 1px solid #d8cdb8;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.gallery-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 5px 6px 0 rgba(0, 0, 0, 0.12);
+}
+
+.gallery-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-info {
+    padding: 0.8rem;
+    background: #faf5e9;
+    border-top: 1px solid #e4dac8;
+}
+
+.gallery-title {
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+}
+
+.gallery-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+}
+
+.delete-gallery-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(192, 57, 43, 0.8);
+    color: white;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.15s;
+    opacity: 0;
+}
+
+.gallery-card:hover .delete-gallery-btn {
+    opacity: 1;
+}
+
+.delete-gallery-btn:hover {
+    background: var(--red);
+    transform: scale(1.05);
+}
+
+.empty-gallery {
+    text-align: center;
+    padding: 3rem;
+    color: var(--muted);
+    background: rgba(255, 254, 245, 0.6);
+    border-radius: 20px;
+}
+
+/* Modal Preview */
+.preview-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.preview-modal img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.string-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.1;
+}
+
+.gallery-container,
+.navbar {
+    position: relative;
+    z-index: 2;
+}
+
+@media (max-width: 700px) {
+    .gallery-container {
+        padding: 1rem;
+    }
+    .nav-links a {
+        padding: 0 0.5rem;
+        font-size: 0.55rem;
+    }
+    .navbar {
+        padding: 0 0.5rem;
+    }
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - LostFinder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/signup.css">
+</head>
+<body>
+    <svg class="string-layer" xmlns="http://www.w3.org/2000/svg">
+        <line x1="80" y1="150" x2="450" y2="380" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="5,7"/>
+        <line x1="680" y1="120" x2="350" y2="450" stroke="#c0392b" stroke-width="0.9" stroke-dasharray="4,8"/>
+        <line x1="180" y1="520" x2="720" y2="280" stroke="#c0392b" stroke-width="0.7" stroke-dasharray="3,9"/>
+    </svg>
+
+    <nav class="navbar">
+        <a class="logo" href="index.html">
+            <span class="logo-dot"></span>
+            LostFinder
+        </a>
+        <div class="nav-links">
+            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+            <a href="gallery.html"><i class="fas fa-images"></i> Gallery</a>
+            <a href="video.html"><i class="fas fa-video"></i> Video</a>
+            <a href="login.html"><i class="fas fa-key"></i> Login</a>
+            <a href="signup.html" class="active"><i class="fas fa-user-plus"></i> Sign Up</a>
+            <a href="team.html"><i class="fas fa-users"></i> Our Team</a>
+        </div>
+    </nav>
+
+    <div class="auth-box">
+        <div class="pin-amber"></div>
+        <div class="tape-corner"></div>
+        
+        <div class="auth-header">
+            <i class="fas fa-user-plus"></i>
+            <h2>Join the Board</h2>
+            <p>daftar akaun untuk laporkan & reunite barang</p>
+        </div>
+
+        <form id="signupForm">
+            <input type="text" id="fullName" placeholder="Nama Penuh" autocomplete="name" required>
+            <input type="email" id="signupEmail" placeholder="Alamat Email" autocomplete="email" required>
+            <input type="tel" id="phone" placeholder="Nombor Telefon (optional)">
+            <input type="password" id="signupPassword" placeholder="Kata Laluan (min 6 huruf)" required>
+            <div class="password-hint">
+                <i class="fas fa-info-circle"></i> 
+                <span>Kata laluan mestilah sekurang-kurangnya 6 aksara</span>
+            </div>
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-scroll"></i> Daftar Akaun
+            </button>
+        </form>
+        
+        <div class="auth-footer">
+            <i class="fas fa-arrow-left"></i> Sudah ada akaun? <a href="login.html">Log masuk di sini</a>
+        </div>
+    </div>
+
+    <div class="sticker">
+        <i class="fas fa-hand-peace"></i> be part of the community
+    </div>
+
+    <div id="toastMsg" class="toast-msg"></div>
+
+    <script src="/js/sign.js"></script>
+</body>
+</html>

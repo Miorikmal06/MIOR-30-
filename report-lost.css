@@ -1,0 +1,396 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --ink: #1a1410;
+    --paper: #f5f0e8;
+    --paper2: #ede8dd;
+    --red: #c0392b;
+    --amber: #d4820a;
+    --teal: #1a6b5c;
+    --border: #b8ad9e;
+    --muted: #7a7060;
+    --tape: rgba(255, 235, 150, 0.55);
+}
+
+html, body {
+    min-height: 100vh;
+    font-family: 'Syne', sans-serif;
+    background-color: #c8a96e;
+    background-image: radial-gradient(circle at 15% 15%, #d4b580 0%, transparent 45%),
+                      radial-gradient(circle at 85% 85%, #b8964e 0%, transparent 45%),
+                      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23c8a96e'/%3E%3Ccircle cx='1' cy='1' r='0.6' fill='%23b0893a' opacity='0.35'/%3E%3Ccircle cx='3' cy='3' r='0.5' fill='%23d4b070' opacity='0.25'/%3E%3Ccircle cx='3' cy='1' r='0.3' fill='%23a07830' opacity='0.2'/%3E%3C/svg%3E");
+}
+
+/* navbar – SAMA SEPERTI DASHBOARD */
+.navbar {
+    background: var(--ink);
+    padding: 0 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 58px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.45rem;
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+}
+
+.logo-dot {
+    width: 9px;
+    height: 9px;
+    background: var(--red);
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 6px rgba(192, 57, 43, 0.8);
+    animation: pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.6;
+    }
+}
+
+.nav-links {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.nav-links a {
+    color: #888070;
+    text-decoration: none;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0 1.1rem;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-links a:hover {
+    color: #d0c8b8;
+}
+
+.nav-links a.active {
+    color: var(--paper);
+    border-bottom-color: var(--red);
+}
+
+/* MAIN CONTAINER */
+.board-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.2rem 1.8rem 4rem;
+}
+
+/* WELCOME CARD (like sticky note) */
+.sticky-note {
+    background: #fffef5;
+    border: 1px solid #ddd5bb;
+    padding: 1.3rem 2rem;
+    position: relative;
+    transform: rotate(-0.7deg);
+    box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.14);
+    margin-bottom: 2rem;
+}
+
+.tape {
+    position: absolute;
+    top: -14px;
+    left: 32px;
+    width: 70px;
+    height: 28px;
+    background: var(--tape);
+    border: 1px solid rgba(200, 180, 90, 0.45);
+}
+
+.sticky-note h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sticky-note h2 i {
+    color: var(--red);
+    font-size: 1.7rem;
+}
+
+.sticky-note p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 8px;
+    border-top: 1px dashed #ccc5b0;
+    padding-top: 10px;
+}
+
+/* FORM CARD - REAL PINNED PAPER */
+.report-card {
+    background: #fffef5;
+    border: 1px solid #d8cdb8;
+    position: relative;
+    padding: 2rem 2rem 2.2rem;
+    box-shadow: 6px 7px 0 rgba(0, 0, 0, 0.12);
+    transform: rotate(0.5deg);
+    transition: transform 0.2s;
+}
+
+.report-card:hover {
+    transform: rotate(0deg) translateY(-4px);
+}
+
+.pin-red {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle, #e05a4a, #9e2d1f);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+.pin-red::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 26px;
+    background: linear-gradient(180deg, #6b5a4a, #2a241e);
+    top: 16px;
+    left: 7px;
+    border-radius: 0 0 2px 2px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 6px;
+}
+
+label i {
+    margin-right: 6px;
+    width: 18px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    background: #fefaf0;
+    border: 1px solid #ddd2be;
+    padding: 12px 14px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    color: var(--ink);
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--red);
+    box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.2);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* upload zone (cork style) */
+.upload-area {
+    border: 2px dashed #cfc3ac;
+    background: #fff9ef;
+    border-radius: 18px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 5px;
+}
+
+.upload-area.drag-over {
+    border-color: var(--teal);
+    background: #f5efe2;
+}
+
+.upload-area i {
+    font-size: 2rem;
+    color: #b7a57a;
+    margin-bottom: 10px;
+}
+
+.upload-area p {
+    font-size: 0.7rem;
+    color: #7f6e50;
+    font-family: 'DM Mono', monospace;
+}
+
+.file-hint {
+    font-size: 0.6rem;
+    margin-top: 6px;
+}
+
+.preview-box {
+    margin-top: 12px;
+    display: none;
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #e8e0ce;
+}
+
+.preview-box img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.remove-img {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(26, 20, 16, 0.8);
+    backdrop-filter: blur(4px);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 60px;
+    color: white;
+    font-size: 0.7rem;
+    font-family: 'DM Mono', monospace;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: 0.15s;
+}
+
+.remove-img:hover {
+    background: var(--red);
+}
+
+.submit-btn {
+    background: var(--ink);
+    border: none;
+    width: 100%;
+    padding: 1rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 40px;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 3px 0 #2f241f;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 #2f241f;
+}
+
+.submit-btn:active {
+    transform: translateY(1px);
+}
+
+.toast-msg {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #1a1410;
+    backdrop-filter: blur(10px);
+    border: 1px solid #c8b690;
+    padding: 12px 24px;
+    border-radius: 60px;
+    color: #f5eedc;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    z-index: 200;
+    transition: 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.toast-msg.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 680px) {
+    .board-container {
+        padding: 1.5rem;
+    }
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .sticky-note h2 {
+        font-size: 1.3rem;
+    }
+    .navbar {
+        padding: 0 1rem;
+    }
+    .nav-links a {
+        padding: 0 0.7rem;
+        font-size: 0.6rem;
+    }
+    .toast-msg {
+        white-space: normal;
+        text-align: center;
+        max-width: 85%;
+    }
+}

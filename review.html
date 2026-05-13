@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ulasan & Testimoni - LostFinder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <style>
+        /* [SAME CSS AS BEFORE - keep all your existing CSS here] */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --ink: #1a1410;
+            --paper: #f5f0e8;
+            --paper2: #ede8dd;
+            --red: #c0392b;
+            --amber: #d4820a;
+            --teal: #1a6b5c;
+            --border: #b8ad9e;
+            --muted: #7a7060;
+            --tape: rgba(255, 235, 150, 0.55);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Syne', sans-serif;
+            color: var(--ink);
+            background-color: #c8a96e;
+            background-image: radial-gradient(circle at 15% 15%, #d4b580 0%, transparent 45%),
+                              radial-gradient(circle at 85% 85%, #b8964e 0%, transparent 45%),
+                              url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23c8a96e'/%3E%3Ccircle cx='1' cy='1' r='0.6' fill='%23b0893a' opacity='0.35'/%3E%3Ccircle cx='3' cy='3' r='0.5' fill='%23d4b070' opacity='0.25'/%3E%3Ccircle cx='3' cy='1' r='0.3' fill='%23a07830' opacity='0.2'/%3E%3C/svg%3E");
+        }
+
+        .string-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.12;
+        }
+
+        .navbar {
+            background: var(--ink);
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 58px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.45rem;
+            color: var(--paper);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-dot {
+            width: 9px;
+            height: 9px;
+            background: var(--red);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 6px rgba(192, 57, 43, 0.8);
+            animation: pulse 2.2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.6; }
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #888070;
+            text-decoration: none;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0 0.8rem;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #d0c8b8;
+        }
+
+        .nav-links a.active {
+            color: var(--paper);
+            border-bottom-color: var(--amber);
+        }
+
+        .review-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-note {
+            background: #fffef5;
+            border: 1px solid #ddd5bb;
+            padding: 1.5rem 2rem;
+            position: relative;
+            transform: rotate(-0.4deg);
+            box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.12);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tape-strip {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 26px;
+            background: var(--tape);
+            border: 1px solid rgba(200, 180, 90, 0.45);
+        }
+
+        .hero-note h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+        }
+
+        .hero-note h1 i {
+            color: var(--amber);
+            margin-right: 10px;
+        }
+
+        .hero-note p {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-top: 8px;
+            border-top: 1px dashed #ccc5b0;
+            padding-top: 8px;
+        }
+
+        .stats-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #fffef5;
+            border: 1px solid #d8cdb8;
+            padding: 1.2rem;
+            text-align: center;
+            border-radius: 16px;
+            box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-number {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--teal);
+        }
+
+        .stat-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        .stars-display {
+            margin-top: 5px;
+            font-size: 0.8rem;
+            color: var(--amber);
+        }
+
+        .write-review {
+            background: #fffef5;
+            border: 1px solid #d8cdb8;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            border-radius: 16px;
+            box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .pin-teal {
+            position: absolute;
+            top: -12px;
+            left: 30px;
+            width: 16px;
+            height: 16px;
+            background: var(--teal);
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .corner-tape-right {
+            position: absolute;
+            top: -8px;
+            right: 20px;
+            width: 55px;
+            height: 22px;
+            background: var(--tape);
+            border: 1px solid rgba(200, 180, 90, 0.45);
+            transform: rotate(3deg);
+        }
+
+        .write-review h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rating-input {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .rating-input label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .star-rating i {
+            font-size: 1.5rem;
+            color: #ddd2be;
+            transition: color 0.15s;
+        }
+
+        .star-rating i.active,
+        .star-rating i.hover {
+            color: var(--amber);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            background: #fefaf0;
+            border: 1px solid #ddd2be;
+            padding: 12px 14px;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.85rem;
+            color: var(--ink);
+            border-radius: 12px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--teal);
+            box-shadow: 0 0 0 2px rgba(26, 107, 92, 0.2);
+        }
+
+        .form-group input[readonly] {
+            background: #f0eadc;
+            color: #8b7f68;
+        }
+
+        .submit-review-btn {
+            background: var(--teal);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submit-review-btn:hover {
+            background: #0f5447;
+            transform: translateY(-2px);
+        }
+
+        .login-banner {
+            background: #fef5e6;
+            border: 1px solid #e8dcc8;
+            padding: 0.8rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 60px;
+            text-align: center;
+            font-size: 0.75rem;
+            font-family: 'DM Mono', monospace;
+        }
+
+        .login-banner a {
+            color: var(--teal);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .review-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background: #fffef5;
+            border: 1px solid #ddd2be;
+            padding: 6px 15px;
+            border-radius: 40px;
+        }
+
+        .filter-select {
+            background: transparent;
+            border: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 5px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fffef5;
+            border: 1px solid #d1c4b0;
+            padding: 4px 12px;
+            border-radius: 30px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            padding: 6px 0;
+            font-size: 0.75rem;
+            min-width: 180px;
+            outline: none;
+        }
+
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .review-card {
+            background: #fffef5;
+            border: 1px solid #d8cdb8;
+            border-radius: 16px;
+            padding: 1.2rem;
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .review-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 3px 5px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .reviewer-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .review-date {
+            font-size: 0.65rem;
+            font-family: 'DM Mono', monospace;
+            color: var(--muted);
+        }
+
+        .review-stars {
+            color: var(--amber);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .review-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .review-text {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            color: #5a4f3e;
+        }
+
+        .review-category {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.6rem;
+            font-family: 'DM Mono', monospace;
+            background: #f3efdf;
+            padding: 3px 10px;
+            border-radius: 20px;
+            color: var(--teal);
+        }
+
+        .review-actions {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .like-review-btn, .report-review-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 0.7rem;
+            color: var(--muted);
+            transition: 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .like-review-btn:hover {
+            color: var(--red);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--muted);
+            background: rgba(255, 254, 245, 0.6);
+            border-radius: 20px;
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--muted);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            background: #fffef5;
+            border: 1px solid #d8cdb8;
+            padding: 8px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Syne', sans-serif;
+            transition: 0.15s;
+        }
+
+        .page-btn:hover {
+            background: var(--teal);
+            color: white;
+            border-color: var(--teal);
+        }
+
+        .page-btn.active {
+            background: var(--teal);
+            color: white;
+            border-color: var(--teal);
+        }
+
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: #1a1410;
+            backdrop-filter: blur(12px);
+            border: 1px solid #c8b690;
+            padding: 10px 24px;
+            border-radius: 60px;
+            color: #f5eedc;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            z-index: 200;
+            transition: 0.25s;
+            pointer-events: none;
+        }
+
+        .toast-msg.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (max-width: 750px) {
+            .navbar {
+                padding: 0 1rem;
+            }
+            .nav-links a {
+                padding: 0 0.5rem;
+                font-size: 0.55rem;
+            }
+            .review-container {
+                padding: 1rem;
+            }
+            .review-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .stats-summary {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<svg class="string-layer" xmlns="http://www.w3.org/2000/svg">
+    <line x1="80" y1="150" x2="450" y2="380" stroke="#c0392b" stroke-width="1" stroke-dasharray="5,7"/>
+    <line x1="680" y1="120" x2="350" y2="450" stroke="#c0392b" stroke-width="0.9" stroke-dasharray="4,8"/>
+    <line x1="180" y1="520" x2="720" y2="280" stroke="#c0392b" stroke-width="0.7" stroke-dasharray="3,9"/>
+    <line x1="550" y1="70" x2="980" y2="380" stroke="#c0392b" stroke-width="0.8" stroke-dasharray="6,8"/>
+</svg>
+
+<nav class="navbar">
+    <a class="logo" href="index.html">
+        <span class="logo-dot"></span>
+        LostFinder
+    </a>
+    <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="browse-items.html"><i class="fas fa-search"></i> Browse</a>
+        <a href="my-reports.html"><i class="fas fa-clipboard-list"></i> My Reports</a>
+        <a href="messages.html"><i class="fas fa-envelope"></i> Messages</a>
+        <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="review.html" class="active"><i class="fas fa-star"></i> Reviews</a>
+    </div>
+</nav>
+
+<div class="review-container">
+    <div class="hero-note">
+        <div class="tape-strip"></div>
+        <h1><i class="fas fa-star"></i> Ulasan & Testimoni</h1>
+        <p>Apa kata komuniti tentang LostFinder? Kongsi pengalaman anda bersama kami!</p>
+    </div>
+
+    <div class="stats-summary">
+        <div class="stat-card">
+            <div class="stat-number" id="totalReviews">0</div>
+            <div class="stat-label">Jumlah Ulasan</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="avgRating">0.0</div>
+            <div class="stat-label">Purata Rating</div>
+            <div class="stars-display" id="avgStars"></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="successRate">0%</div>
+            <div class="stat-label">Kadar Kepuasan</div>
+        </div>
+    </div>
+
+    <div id="writeReviewSection" class="write-review" style="display: none;">
+        <div class="pin-teal"></div>
+        <div class="corner-tape-right"></div>
+        <h3><i class="fas fa-pen-fancy"></i> Kongsi Pengalaman Anda</h3>
+        <form id="reviewForm">
+            <div class="rating-input">
+                <label>Rating Anda:</label>
+                <div class="star-rating" id="starRating">
+                    <i class="far fa-star" data-rating="1"></i>
+                    <i class="far fa-star" data-rating="2"></i>
+                    <i class="far fa-star" data-rating="3"></i>
+                    <i class="far fa-star" data-rating="4"></i>
+                    <i class="far fa-star" data-rating="5"></i>
+                </div>
+                <input type="hidden" id="ratingValue" value="0">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Nama</label>
+                <input type="text" id="reviewerName" placeholder="Nama anda" readonly>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-tag"></i> Tajuk</label>
+                <input type="text" id="reviewTitle" placeholder="Ringkasan pengalaman anda..." maxlength="100">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-comment"></i> Ulasan</label>
+                <textarea id="reviewText" rows="4" placeholder="Ceritakan pengalaman anda menggunakan LostFinder..."></textarea>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-check-circle"></i> Kategori Pengalaman</label>
+                <select id="reviewCategory">
+                    <option value="lost">Berjaya dapat barang hilang</option>
+                    <option value="found">Berjaya pulangkan barang</option>
+                    <option value="both">Pengalaman am</option>
+                </select>
+            </div>
+            <button type="submit" class="submit-review-btn"><i class="fas fa-paper-plane"></i> Hantar Ulasan</button>
+        </form>
+    </div>
+
+    <div id="loginBanner" class="login-banner" style="display: none;">
+        <i class="fas fa-lock"></i> <a href="login.html">Log masuk</a> atau <a href="signup.html">daftar</a> untuk memberikan ulasan!
+    </div>
+
+    <div class="review-controls">
+        <div class="filter-group">
+            <i class="fas fa-filter"></i>
+            <select id="ratingFilter" class="filter-select">
+                <option value="all">Semua Rating</option>
+                <option value="5">★★★★★ (5)</option>
+                <option value="4">★★★★☆ (4+)</option>
+                <option value="3">★★★☆☆ (3+)</option>
+                <option value="2">★★☆☆☆ (2+)</option>
+                <option value="1">★☆☆☆☆ (1+)</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <i class="fas fa-sort"></i>
+            <select id="sortBy" class="filter-select">
+                <option value="newest">Terbaru</option>
+                <option value="oldest">Terlama</option>
+                <option value="highest">Rating Tertinggi</option>
+                <option value="lowest">Rating Terendah</option>
+            </select>
+        </div>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchReview" placeholder="Cari ulasan..." autocomplete="off">
+        </div>
+    </div>
+
+    <div id="reviewsList" class="reviews-list">
+        <div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Loading reviews...</div>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+</div>
+
+<div id="toastMsg" class="toast-msg"></div>
+
+<script>
+const REVIEWS_KEY = "lostfinder_reviews";
+const currentUser = sessionStorage.getItem("loggedInUser");
+const currentUserEmail = sessionStorage.getItem("userEmail") || "";
+
+// 🔴 IMPORTANT: FORCE RESET - HAPUS DATA LAMA DARI LOCALSTORAGE
+// Ini akan pastikan nama yang baru (Mior Ikmal, Syamsul Nazir, dll) muncul
+localStorage.removeItem(REVIEWS_KEY);
+
+// ==================== 7 ULASAN DENGAN NAMA YANG DIMINTA ====================
+const demoReviews = [
+    {
+        id: "rev1",
+        name: "Mior Ikmal",
+        email: "mior@lostfinder.my",
+        rating: 5,
+        title: "Berjaya dapat semula dompet!",
+        text: "Alhamdulillah! Dompet kulit hitam saya yang hilang di Mid Valley selama 3 hari akhirnya ditemui melalui platform ini. Orang baik yang jumpa terus hubungi saya. Terima kasih LostFinder!",
+        category: "lost",
+        date: "2025-03-20T10:30:00Z",
+        likes: 45,
+        reported: false
+    },
+    {
+        id: "rev2",
+        name: "Syamsul Nazir",
+        email: "syamsul@lostfinder.my",
+        rating: 5,
+        title: "Platform yang sangat membantu komuniti",
+        text: "Saya terjumpa sebuah iPhone 14 Pro di dalam LRT, terus report di LostFinder. Dalam masa 6 jam, pemilik asal berjaya dihubungi dan telefon dikembalikan. Very satisfied!",
+        category: "found",
+        date: "2025-03-18T14:20:00Z",
+        likes: 52,
+        reported: false
+    },
+    {
+        id: "rev3",
+        name: "Ammar Mahadir",
+        email: "ammar@lostfinder.my",
+        rating: 5,
+        title: "Reunite barang dengan cepat!",
+        text: "Jam tangan Casio saya yang hilang di gym berjaya ditemui hanya dalam masa 2 jam selepas report. Proses mudah dan cepat. Highly recommended untuk semua!",
+        category: "lost",
+        date: "2025-03-15T09:15:00Z",
+        likes: 38,
+        reported: false
+    },
+    {
+        id: "rev4",
+        name: "Iskandar Zulkarnain",
+        email: "iskandar@lostfinder.my",
+        rating: 5,
+        title: "Pengalaman terbaik pernah ada!",
+        text: "Powerbank saya yang tertinggal di kafe berjaya dipulangkan. Terima kasih kepada orang baik dan platform LostFinder. Memang game changer!",
+        category: "lost",
+        date: "2025-03-12T16:45:00Z",
+        likes: 29,
+        reported: false
+    },
+    {
+        id: "rev5",
+        name: "Hafiz",
+        email: "hafiz@lostfinder.my",
+        rating: 5,
+        title: "Berjaya pulangkan kunci kereta",
+        text: "Saya terjumpa kunci kereta Proton di food court. Lepas post dalam LostFinder, owner terus contact. Rasa seronok dapat membantu orang lain. 👍",
+        category: "found",
+        date: "2025-03-10T11:00:00Z",
+        likes: 31,
+        reported: false
+    },
+    {
+        id: "rev6",
+        name: "Danish Shazwan",
+        email: "danish@lostfinder.my",
+        rating: 4,
+        title: "Bagus tapi boleh improve lagi",
+        text: "Secara keseluruhannya bagus. Cuma kadang loading slow sikit. Tapi dari segi fungsi dan reka bentuk, memang terbaik! Teruskan usaha.",
+        category: "both",
+        date: "2025-03-08T08:30:00Z",
+        likes: 23,
+        reported: false
+    },
+    {
+        id: "rev7",
+        name: "Haziq Afiq",
+        email: "haziq@lostfinder.my",
+        rating: 5,
+        title: "Best platform ever!",
+        text: "Berjaya reunite beg galas adik saya yang tertinggal di bas. Terima kasih banyak-banyak kepada semua yang membantu. LostFinder memang recommended!",
+        category: "found",
+        date: "2025-03-05T13:20:00Z",
+        likes: 36,
+        reported: false
+    }
+];
+
+function loadReviews() {
+    // Pastikan kita sentiasa guna demoReviews yang baru
+    localStorage.setItem(REVIEWS_KEY, JSON.stringify(demoReviews));
+    return demoReviews;
+}
+
+function saveReviews(reviews) {
+    localStorage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
+    updateStats();
+}
+
+function updateStats() {
+    const reviews = loadReviews();
+    const total = reviews.length;
+    const sumRating = reviews.reduce((sum, r) => sum + r.rating, 0);
+    const avgRating = (sumRating / total).toFixed(1);
+    const satisfiedCount = reviews.filter(r => r.rating >= 4).length;
+    const successRate = Math.round((satisfiedCount / total) * 100);
+    
+    $('#totalReviews').text(total);
+    $('#avgRating').text(avgRating);
+    $('#successRate').text(successRate + '%');
+    
+    const fullStars = Math.floor(avgRating);
+    const hasHalf = avgRating % 1 >= 0.5;
+    let starsHtml = '';
+    for (let i = 1; i <= 5; i++) {
+        if (i <= fullStars) {
+            starsHtml += '<i class="fas fa-star"></i>';
+        } else if (i === fullStars + 1 && hasHalf) {
+            starsHtml += '<i class="fas fa-star-half-alt"></i>';
+        } else {
+            starsHtml += '<i class="far fa-star"></i>';
+        }
+    }
+    $('#avgStars').html(starsHtml);
+}
+
+// ... (the rest of the functions remain the same as before)
+function addReview(reviewData) {
+    if (!currentUser) {
+        showToast("Sila log masuk untuk memberikan ulasan.", true);
+        return false;
+    }
+    
+    const reviews = loadReviews();
+    const newReview = {
+        id: "rev_" + Date.now() + "_" + Math.random().toString(36).substr(2, 6),
+        name: reviewData.name,
+        email: currentUserEmail,
+        rating: reviewData.rating,
+        title: reviewData.title,
+        text: reviewData.text,
+        category: reviewData.category,
+        date: new Date().toISOString(),
+        likes: 0,
+        reported: false
+    };
+    
+    reviews.unshift(newReview);
+    saveReviews(reviews);
+    renderReviews();
+    showToast("Ulasan anda berjaya dihantar! Terima kasih!", false);
+    return true;
+}
+
+function likeReview(reviewId) {
+    if (!currentUser) {
+        showToast("Sila log masuk untuk like ulasan.", true);
+        return;
+    }
+    
+    const reviews = loadReviews();
+    const review = reviews.find(r => r.id === reviewId);
+    if (review) {
+        review.likes = (review.likes || 0) + 1;
+        saveReviews(reviews);
+        renderReviews();
+        showToast("Terima kasih kerana menyukai ulasan ini!", false);
+    }
+}
+
+function reportReview(reviewId) {
+    if (!currentUser) {
+        showToast("Sila log masuk untuk melaporkan ulasan.", true);
+        return;
+    }
+    
+    const reviews = loadReviews();
+    const review = reviews.find(r => r.id === reviewId);
+    if (review && !review.reported) {
+        review.reported = true;
+        saveReviews(reviews);
+        renderReviews();
+        showToast("Ulasan telah dilaporkan. Terima kasih atas maklum balas anda.", false);
+    }
+}
+
+let currentPage = 1;
+const itemsPerPage = 5;
+let currentFilterRating = "all";
+let currentSortBy = "newest";
+let currentSearchTerm = "";
+
+function renderReviews() {
+    let reviews = loadReviews();
+    
+    if (currentFilterRating !== "all") {
+        const minRating = parseInt(currentFilterRating);
+        reviews = reviews.filter(r => r.rating >= minRating);
+    }
+    
+    if (currentSearchTerm) {
+        const term = currentSearchTerm.toLowerCase();
+        reviews = reviews.filter(r => 
+            r.title.toLowerCase().includes(term) || 
+            r.text.toLowerCase().includes(term) ||
+            r.name.toLowerCase().includes(term)
+        );
+    }
+    
+    switch (currentSortBy) {
+        case "newest":
+            reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+            break;
+        case "oldest":
+            reviews.sort((a, b) => new Date(a.date) - new Date(b.date));
+            break;
+        case "highest":
+            reviews.sort((a, b) => b.rating - a.rating);
+            break;
+        case "lowest":
+            reviews.sort((a, b) => a.rating - b.rating);
+            break;
+    }
+    
+    const totalPages = Math.ceil(reviews.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const paginatedReviews = reviews.slice(startIndex, startIndex + itemsPerPage);
+    
+    const $container = $('#reviewsList');
+    $container.empty();
+    
+    if (paginatedReviews.length === 0) {
+        $container.html('<div class="empty-state"><i class="fas fa-comment-slash"></i><br>Tiada ulasan. Jadilah yang pertama memberikan ulasan!</div>');
+        $('#pagination').empty();
+        return;
+    }
+    
+    $.each(paginatedReviews, function(index, review) {
+        const starsHtml = renderStars(review.rating);
+        const categoryIcon = getCategoryIcon(review.category);
+        const categoryText = getCategoryText(review.category);
+        const formattedDate = formatDate(review.date);
+        const initials = getInitials(review.name);
+        
+        const $card = $(`
+            <div class="review-card" data-id="${review.id}">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">${initials}</div>
+                        <div>
+                            <div class="reviewer-name">${escapeHtml(review.name)}</div>
+                            <div class="review-date">${formattedDate}</div>
+                        </div>
+                    </div>
+                    <div class="review-stars">${starsHtml}</div>
+                </div>
+                <div class="review-title">${escapeHtml(review.title)}</div>
+                <div class="review-text">${escapeHtml(review.text)}</div>
+                <div class="review-category"><i class="fas ${categoryIcon}"></i> ${categoryText}</div>
+                <div class="review-actions">
+                    <button class="like-review-btn" data-id="${review.id}"><i class="far fa-heart"></i> <span class="like-count">${review.likes || 0}</span></button>
+                    <button class="report-review-btn" data-id="${review.id}"><i class="fas fa-flag"></i> Lapor</button>
+                </div>
+            </div>
+        `);
+        $container.append($card);
+    });
+    
+    $(document).off('click', '.like-review-btn').on('click', '.like-review-btn', function() {
+        const reviewId = $(this).data('id');
+        likeReview(reviewId);
+    });
+    
+    $(document).off('click', '.report-review-btn').on('click', '.report-review-btn', function() {
+        const reviewId = $(this).data('id');
+        reportReview(reviewId);
+    });
+    
+    renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+    const $pagination = $('#pagination');
+    $pagination.empty();
+    if (totalPages <= 1) return;
+    
+    for (let i = 1; i <= totalPages; i++) {
+        const $btn = $(`<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`);
+        $pagination.append($btn);
+    }
+    
+    $('.page-btn').off('click').on('click', function() {
+        currentPage = parseInt($(this).data('page'));
+        renderReviews();
+        $('html, body').animate({ scrollTop: 0 }, 'smooth');
+    });
+}
+
+function getInitials(name) {
+    const parts = name.split(' ');
+    if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+    return (parts[0][0] + (parts[1] ? parts[1][0] : parts[0][1])).toUpperCase();
+}
+
+function renderStars(rating) {
+    let stars = '';
+    const fullStars = Math.floor(rating);
+    const hasHalf = rating % 1 >= 0.5;
+    for (let i = 1; i <= 5; i++) {
+        if (i <= fullStars) {
+            stars += '<i class="fas fa-star"></i>';
+        } else if (i === fullStars + 1 && hasHalf) {
+            stars += '<i class="fas fa-star-half-alt"></i>';
+        } else {
+            stars += '<i class="far fa-star"></i>';
+        }
+    }
+    return stars;
+}
+
+function getCategoryIcon(category) {
+    switch(category) {
+        case 'lost': return 'fa-frown';
+        case 'found': return 'fa-smile';
+        default: return 'fa-hand-peace';
+    }
+}
+
+function getCategoryText(category) {
+    switch(category) {
+        case 'lost': return 'Berjaya dapat barang hilang';
+        case 'found': return 'Berjaya pulangkan barang';
+        default: return 'Pengalaman am';
+    }
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffDays = Math.floor((now - date) / 86400000);
+    
+    if (diffDays === 0) return 'Hari ini';
+    if (diffDays === 1) return 'Semalam';
+    if (diffDays < 7) return `${diffDays} hari lepas`;
+    return date.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
+function showToast(msg, isError = false) {
+    const toast = $('#toastMsg');
+    toast.text(msg);
+    toast.css('background', isError ? '#5a1e15' : '#1a1410');
+    toast.addClass('show');
+    setTimeout(function() {
+        toast.removeClass('show');
+    }, 3000);
+}
+
+function setupStarRating() {
+    let selectedRating = 0;
+    
+    $('#starRating i').hover(
+        function() {
+            const rating = $(this).data('rating');
+            $('#starRating i').each(function(index) {
+                if (index < rating) {
+                    $(this).removeClass('far').addClass('fas').addClass('hover');
+                } else {
+                    $(this).removeClass('fas hover').addClass('far');
+                }
+            });
+        },
+        function() {
+            $('#starRating i').each(function(index) {
+                $(this).removeClass('hover');
+                if (index < selectedRating) {
+                    $(this).removeClass('far').addClass('fas').addClass('active');
+                } else {
+                    $(this).removeClass('fas active').addClass('far');
+                }
+            });
+        }
+    );
+    
+    $('#starRating i').on('click', function() {
+        selectedRating = $(this).data('rating');
+        $('#ratingValue').val(selectedRating);
+        $('#starRating i').each(function(index) {
+            if (index < selectedRating) {
+                $(this).removeClass('far').addClass('fas').addClass('active');
+            } else {
+                $(this).removeClass('fas active').addClass('far');
+            }
+        });
+    });
+}
+
+function setupReviewForm() {
+    $('#reviewForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        const rating = parseInt($('#ratingValue').val());
+        const title = $('#reviewTitle').val().trim();
+        const text = $('#reviewText').val().trim();
+        const category = $('#reviewCategory').val();
+        
+        if (rating === 0) {
+            showToast("Sila berikan rating untuk ulasan anda.", true);
+            return;
+        }
+        
+        if (!title) {
+            showToast("Sila masukkan tajuk ulasan.", true);
+            return;
+        }
+        
+        if (!text) {
+            showToast("Sila masukkan ulasan anda.", true);
+            return;
+        }
+        
+        addReview({
+            name: currentUser,
+            rating: rating,
+            title: title,
+            text: text,
+            category: category
+        });
+        
+        $('#ratingValue').val(0);
+        $('#reviewTitle').val('');
+        $('#reviewText').val('');
+        $('#reviewCategory').val('lost');
+        $('#starRating i').removeClass('fas active').addClass('far');
+    });
+}
+
+function setupUI() {
+    if (currentUser) {
+        $('#writeReviewSection').show();
+        $('#loginBanner').hide();
+        $('#reviewerName').val(currentUser);
+    } else {
+        $('#writeReviewSection').hide();
+        $('#loginBanner').show();
+    }
+}
+
+function initFilters() {
+    $('#ratingFilter').on('change', function() {
+        currentFilterRating = $(this).val();
+        currentPage = 1;
+        renderReviews();
+    });
+    
+    $('#sortBy').on('change', function() {
+        currentSortBy = $(this).val();
+        currentPage = 1;
+        renderReviews();
+    });
+    
+    let timeout;
+    $('#searchReview').on('input', function() {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            currentSearchTerm = $(this).val();
+            currentPage = 1;
+            renderReviews();
+        }, 300);
+    });
+}
+
+$(document).ready(function() {
+    console.log("⭐ Review page loaded dengan nama: Mior Ikmal, Syamsul Nazir, Ammar Mahadir, Iskandar Zulkarnain, Hafiz, Danish Shazwan, Haziq Afiq ⭐");
+    updateStats();
+    setupUI();
+    setupStarRating();
+    setupReviewForm();
+    initFilters();
+    renderReviews();
+});
+</script>
+</body>
+</html>

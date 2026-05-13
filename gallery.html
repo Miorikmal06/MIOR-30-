@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Barang Ditemui & Reunite - LostFinder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/gallery.css">
+</head>
+<body>
+<div class="string-layer">
+    <svg width="100%" height="100%">
+        <line x1="100" y1="200" x2="500" y2="400" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,6"/>
+        <line x1="600" y1="150" x2="300" y2="500" stroke="#c0392b" stroke-width="0.8"/>
+    </svg>
+</div>
+
+<!-- Navbar Public - untuk semua orang boleh tengok -->
+<nav class="navbar">
+    <a class="logo" href="index.html"><span class="logo-dot"></span>LostFinder</a>
+    <div class="nav-links">
+        <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+        <a href="gallery.html" class="active"><i class="fas fa-images"></i> Gallery</a>
+        <a href="video.html"><i class="fas fa-video"></i> Video</a>
+        <a href="login.html"><i class="fas fa-key"></i> Login</a>
+        <a href="signup.html"><i class="fas fa-user-plus"></i> Sign Up</a>
+    </div>
+</nav>
+
+<div class="gallery-container">
+    <div class="hero-note">
+        <div class="tape-strip"></div>
+        <h1><i class="fas fa-images"></i> Galeri Barang Ditemui & Berjaya Reunite</h1>
+        <p>Koleksi gambar barang yang berjaya dikembalikan kepada pemilik — Bukti komuniti kita prihatin!</p>
+    </div>
+
+    <!-- Banner untuk user yang belum login -->
+    <div id="loginBanner" class="login-banner" style="display: none;">
+        <i class="fas fa-lock"></i> <a href="login.html">Log masuk</a> atau <a href="signup.html">daftar</a> untuk upload gambar reunite anda!
+    </div>
+
+    <!-- Upload Section - hanya nampak jika login -->
+    <div id="uploadSection" class="upload-section" style="display: none;">
+        <div class="pin-mini" style="position:absolute; top:-8px; left:20px; width:12px; height:12px; background:var(--teal); border-radius:50%;"></div>
+        <h3><i class="fas fa-cloud-upload-alt"></i> Upload Gambar Reunite</h3>
+        <div class="upload-area" id="uploadArea">
+            <i class="fas fa-camera"></i>
+            <p>Klik atau seret gambar ke sini</p>
+            <p style="font-size:0.6rem;">JPG, PNG, WEBP (Max 5MB)</p>
+            <input type="file" id="galleryImageInput" accept="image/jpeg,image/png,image/webp" class="gallery-upload-input">
+        </div>
+        <div class="upload-area" id="uploadUrlArea" style="border-style:solid; background:#f5f0e6;">
+            <i class="fas fa-link"></i>
+            <p>Atau masukkan URL gambar</p>
+            <input type="text" id="imageUrlInput" placeholder="https://... gambar anda" style="width:100%; margin-top:8px; padding:8px; border:1px solid #ddd2be; border-radius:8px;">
+            <button id="addUrlBtn" style="margin-top:8px; background:var(--teal); color:white; border:none; padding:6px 16px; border-radius:20px; cursor:pointer;">Tambah</button>
+        </div>
+    </div>
+
+    <div id="galleryGrid" class="gallery-grid">
+        <div class="empty-gallery"><i class="fas fa-camera"></i><br>Loading gallery...</div>
+    </div>
+</div>
+
+<div id="previewModal" class="preview-modal">
+    <img id="previewImg" src="">
+</div>
+
+<script src="/js/gallery.js"></script>
+</body>
+</html>

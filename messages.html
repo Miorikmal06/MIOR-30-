@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - LostFinder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="messages.css">
+</head>
+<body>
+<div class="string-layer">
+    <svg width="100%" height="100%">
+        <line x1="120" y1="200" x2="500" y2="400" stroke="#c0392b" stroke-width="0.8" stroke-dasharray="4,6"/>
+        <line x1="300" y1="100" x2="700" y2="500" stroke="#c0392b" stroke-width="0.7" stroke-dasharray="3,7"/>
+    </svg>
+</div>
+
+<nav class="navbar">
+    <a class="logo" href="index.html">
+        <span class="logo-dot"></span>
+        LostFinder
+    </a>
+    <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="browse-items.html"><i class="fas fa-search"></i> Browse</a>
+        <a href="my-reports.html"><i class="fas fa-clipboard-list"></i> My Reports</a>
+        <a href="messages.html" class="active"><i class="fas fa-envelope"></i> Messages</a>
+        <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+    </div>
+</nav>
+
+<div class="messages-container">
+    <div class="page-note">
+        <div class="tape-strip"></div>
+        <h2><i class="fas fa-comments"></i> Peti Masuk & Perbualan</h2>
+        <p>Hubungi pengguna lain tentang barang hilang atau ditemui. Klik "Contact" di mana-mana item untuk memulakan perbualan.</p>
+    </div>
+
+    <div class="messaging-panel">
+        <div class="inbox-sidebar">
+            <div class="inbox-header"><i class="fas fa-inbox"></i> Perbualan</div>
+            <div id="conversationList" class="conversation-list">
+                <div style="padding: 2rem; text-align:center; color:var(--muted);">Loading...</div>
+            </div>
+        </div>
+
+        <div id="chatArea" class="chat-area">
+            <div class="chat-header" id="chatHeader">
+                <h3><i class="fas fa-comment-dots"></i> <span id="chatPartnerName">--</span></h3>
+                <p id="chatContext">Pilih perbualan untuk mula</p>
+            </div>
+            <div id="chatMessages" class="chat-messages">
+                <div class="empty-chat"><i class="fas fa-envelope-open-text"></i><br>Tiada perbualan dipilih</div>
+            </div>
+            <div class="chat-input-area" id="chatInputArea" style="display: none;">
+                <input type="text" id="messageInput" placeholder="Taip mesej anda..." autocomplete="off">
+                <button id="sendMsgBtn"><i class="fas fa-paper-plane"></i> Hantar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-msg"></div>
+
+<script src="messages.js"></script>
+</body>
+</html>
